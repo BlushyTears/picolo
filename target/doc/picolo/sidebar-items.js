@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["get_height","Returns height of the image as u32"],["get_width","Returns the width of image as u32"],["load_picture","Takes a borrowed string slice `Str` as its path."]],"struct":[["Color","Rgba struct"],["Pixel","Pixel struct that also derives Color struct"]]});
