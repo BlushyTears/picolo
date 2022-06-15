@@ -2,6 +2,10 @@
 name = "picolo"
 version = "0.1.2"
 authors = ["Adam"]
+homepage = "https://github.com/BlushyTears/picolo"
+repository = "https://github.com/BlushyTears/picolo"
+documentation = "https://docs.rs/picolo"
+
 edition = "2021"
 description = "A crate for transposing images into data"
 license = "MIT"
