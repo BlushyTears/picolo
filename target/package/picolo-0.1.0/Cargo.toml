@@ -13,6 +13,9 @@
 edition = "2021"
 name = "picolo"
 version = "0.1.0"
+authors = ["Adam"]
+description = "A crate for transposing images into data"
+license = "MIT"
 resolver = "2"
 
 [dependencies.image]
