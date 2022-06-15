@@ -6,7 +6,8 @@ Input(Image) -> Output(Pixel: x, y, color[r, g, b, a])
 # Implementation (Until crates.io documentation starts to work)
 
 ```rust
-let foo = "images/ig-icon.png"; // Name of image path. In this case it's in a folder called images next to src
+// Name of image path. In this case it's in a folder called images next to src
+let foo = "images/ig-icon.png"; 
 let bar_str = &foo;
 let pixl_struct = picolo::load_picture(bar_str);
 
