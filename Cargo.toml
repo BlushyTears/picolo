@@ -1,6 +1,6 @@
 [package]
 name = "picolo"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Adam"]
 edition = "2021"
 description = "A crate for transposing images into data"
