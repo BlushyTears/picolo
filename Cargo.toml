@@ -1,13 +1,13 @@
 [package]
 name = "picolo"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Adam"]
 homepage = "https://github.com/BlushyTears/picolo"
 repository = "https://github.com/BlushyTears/picolo"
 documentation = "https://docs.rs/picolo"
 
 edition = "2021"
-description = "A crate for transposing images into data"
+description = "A crate for transposing images into data. See Github for examples until official documentation starts to work"
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

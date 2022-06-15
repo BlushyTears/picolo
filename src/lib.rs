@@ -19,18 +19,18 @@ use image::GenericImageView;
 /// Rgba struct
 #[derive(Debug)]
 pub struct Color {
-    red: u8,
-    blue: u8,
-    green: u8,
-    alpha: u8,
+    pub red: u8,
+    pub blue: u8,
+    pub green: u8,
+    pub alpha: u8,
 }
 
 /// Pixel struct that also derives Color struct
 #[derive(Debug)]
 pub struct Pixel {
-    x: u32,
-    y: u32,
-    color: Color,
+    pub x: u32,
+    pub y: u32,
+    pub color: Color,
 }
 
 /// Returns the width of image as u32
@@ -89,4 +89,3 @@ pub fn load_picture(img: &str) -> std::vec::Vec<[Pixel; 1]> {
     }
     vec_struct
 }
-
