@@ -1,4 +1,4 @@
-# picolo
+# Picolo
 Image-reading crate for transposing an image into its bareboned data. 
 
 Input(Image) -> Output(Pixel: x, y, color[r, g, b, a])
