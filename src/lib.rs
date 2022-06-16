@@ -16,6 +16,9 @@
 //! }
 //! ```
 
+// TODO: GENERATE LABELS FOR PICTURES SOMEHOW
+// 
+
 use image::GenericImageView;
 
 /// Rgba struct

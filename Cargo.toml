@@ -7,7 +7,7 @@ repository = "https://github.com/BlushyTears/picolo"
 documentation = "https://docs.rs/picolo"
 
 edition = "2021"
-description = "A simple crate for transposing images into data. Uses the fantastic image crate."
+description = "A simple crate for transposing images into broken down data. Uses the fantastic image crate."
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
