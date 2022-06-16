@@ -7,7 +7,9 @@
 //! Basic usage for reading and translating a complete
 //! Image and translating it to a comprehensive table:  
 //! ```
-//! let pixl_struct = picolo::load_picture("images/ig-icon.png");
+//! // Function takes in image path and precision variable:
+//! // 1 = count all pixels, 2 = count half and so on:
+//! let pixl_struct = picolo::load_picture("images/ig-icon.png", 2);
 //!
 //! for i in pixl_struct {
 //!     println!("{:?}", i); 
@@ -45,7 +47,7 @@ pub fn get_height(img: &str) -> u32{
     img.width()
 }
 
-/// Takes a borrowed string slice `Str` as its path.
+/// Takes a borrowed string slice `Str` as its path and usize for precision.
 ///
 /// [`with_capacity`]: #method.with_capacity
 ///
@@ -57,20 +59,26 @@ pub fn get_height(img: &str) -> u32{
 /// ```
 /// let foo = "images/ig-icon.png"; 
 /// let bar_str = &foo;
-/// let pixl_struct = picolo::load_picture(bar_str);
+/// let pixl_struct = picolo::load_picture(bar_str, 2);
 ///
 /// for i in pixl_struct {
 ///     println!("x {} y {} red {} green {} blue: {}", i[0].x, i[0].y, 
 ///     i[0].color.red, i[0].color.green, i[0].color.blue);
 /// }
 /// ```
-pub fn load_picture(img: &str) -> std::vec::Vec<[Pixel; 1]> {
+pub fn load_picture(img: &str, precision: u32) -> std::vec::Vec<[Pixel; 1]> {
 
     let mut vec_struct = Vec::new();
     let img = image::open(img).unwrap();
 
-    for i in 0..img.height() {
-        for j in 0..img.width() {
+    if precision == 0 || precision > img.height() || precision > img.width() {
+        panic!("Precision cannot be value {} because it's either 0
+        or larger than size of the image height {} or image width {}",
+        precision, img.height(), img.width() ); 
+    };
+
+    for i in 0..(img.height() / precision) {
+        for j in 0..(img.width() / precision) {
             let img_pixel = img.get_pixel(j, i);
             let pxl = [
                 Pixel {
@@ -86,6 +94,6 @@ pub fn load_picture(img: &str) -> std::vec::Vec<[Pixel; 1]> {
             ];
             vec_struct.push(pxl);
         }
-    }
+    };
     vec_struct
 }
