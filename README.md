@@ -3,7 +3,7 @@ Image-reading crate for transposing an image into its bareboned data.
 
 Input(Image) -> Output(Pixel: x, y, color[r, g, b, a])
 
-# Implementation (Until crates.io documentation starts to work)
+# Implementation
 
 ```rust
 // Name of image path. In this case it's in a folder called images next to src
