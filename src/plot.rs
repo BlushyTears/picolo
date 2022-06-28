@@ -2,8 +2,6 @@ use image::{GenericImageView, ImageBuffer, RgbImage, imageops};
 use vector2d::Vector2D;
 use rand::Rng;
 
-// Plot.rs is a plotting lib that generates an 800x800 plot based on X and Y Vectors
-
 const IMAGE_X: u32 = 800;
 const IMAGE_Y: u32 = 800;
 
@@ -50,15 +48,10 @@ impl Default for Plot {
 // vec_x: Vec<i32>, vec_y: Vec<i32>
 pub fn create_plot() {
     
-    let mut plot = Plot::default();
-
+    let plot = Plot::default();
     let mut imgbuf = image::ImageBuffer::new(plot.imgx, plot.imgy);
-
     let black_clr = Color {red: 10, green: 10, blue: 10, alpha: 100};
-
     let mut curr_clr = &plot.bg_color; 
-
-    // let map = get_key_points(&plot);
 
     // Canvas
     for x in 0..plot.imgx {
@@ -68,6 +61,7 @@ pub fn create_plot() {
         }
     }
 
+    // Lines
     for x in 0..plot.imgx {
         for y in 0..plot.imgy {
             if x > 150 && x < 155 {
@@ -86,41 +80,16 @@ pub fn create_plot() {
 }
 
 
-// fn get_key_points(_plot: &Plot) -> Vec<[Pixel; 1]> {
-
-//     let mut plot = _plot;
-//     let mut plt_map = Vec::new();
-//     let 
-
-//     for i in 0..(plot.imgx / 400) {
-//         for j in 0..(plot.imgy / 400) {
-//             let color = [
-//                 Color {
-//                     red: 10,
-//                     green: 10,
-//                     blue: 10,
-//                     alpha: 10,
-//                 }
-//             ];
-//             plt
-//         }
-//     }
-//     plt_map
-// }
-
-
-// 
-// fn get_square_ins(_plot: &Plot, _x: &u32, _y: &u32) -> Color {
+fn get_square_ins(_plot: &Plot, _x: &u32, _y: &u32) -> Color {
     
-//     let blue_clr = Color {red: 10, green: 10, blue: 255, alpha: 100};
-//     let black_clr = Color {red: 8, green: 10, blue: 12, alpha: 100};
+    let blue_clr = Color {red: 10, green: 10, blue: 255, alpha: 100};
     
-//     let mut rng = rand::thread_rng();
+    let mut rng = rand::thread_rng();
 
-//     let r = rng.gen_range(1..50);
-//     let g = rng.gen_range(1..5);
-//     let b = rng.gen_range(1..5);
+    let r = rng.gen_range(1..50);
+    let g = rng.gen_range(1..5);
+    let b = rng.gen_range(1..5);
 
-//     let ret = Color{red: r, green: g, blue: b, alpha: 100};
-//     ret
-// } 
+    let ret = Color{red: r, green: g, blue: b, alpha: 100};
+    ret
+} 

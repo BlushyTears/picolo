@@ -8,5 +8,5 @@ mod tests {
     fn try_write() {
         write_to_img();
     }
-    moa();
+
 }
