@@ -48,9 +48,9 @@ for i in pixl_struct {
 ```
 
 #TODO:
-* Convert to uf32 functionality (Floats are just easier to work with)
 * Add option to draw circles if preferred (.json file preferably)
 * Add coloring variation if dataset become too large for the plot
+* Add text above individual datapoints (Display: as '50, 12')
 * Add line drawing
 * Add function to open image after the plot has been drawn so the user doesn't have to
 * Refactor current way of finding origin with more exact positions
