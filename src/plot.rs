@@ -32,7 +32,7 @@ trait ColorSet {
     fn set_vals(r: u8, g: u8, b: u8) -> Color;
 }
 
-// Implement setting of custom color
+/// Implement setting of custom color
 impl ColorSet for Color {
     fn set_vals(r: u8, g: u8, b: u8) -> Color {
         Color { 
