@@ -29,7 +29,7 @@ for i in pixl_struct {
 }
 
 // Accessing all fields:
-// @Params: &path as &str, precision as u32 (1 = 100% precision, 2 = 50% ...)  
+// @Params: &path as &str, precision as u32 (1 = 100% precision, 2 = 50%, ...)  
 let foo = "images/icon.png"; 
 let bar_str = &foo;
 let precision = 1;
