@@ -14,6 +14,20 @@ pub struct Color {
     pub alpha: u8,
 }
 
+trait ColorSet {
+    fn set_vals(r: u8, g: u8, b: u8, a: u8) -> Color;
+}
+
+impl ColorSet for Color {
+    fn set_vals(r: u8, g: u8, b: u8, a: u8) -> Color {
+        Color { 
+            red: (r), 
+            green: (g), 
+            blue: (b), 
+            alpha: (a), 
+        }
+    }
+}
 
 // Hard-coded bg color for now, enum later
 impl Default for Color {
@@ -28,11 +42,11 @@ impl Default for Color {
 }
 
 // vec_x: Vec<i32>, vec_y: Vec<i32>
-pub fn create_plot(img_x: u32, img_y: u32) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
+pub fn create_plot(img_x: u32, img_y: u32, y_clamp: &u32) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
 
     let plot = Color::default();
+    let black_clr = Color::set_vals(10, 10, 10, 100);
     let mut imgbuf = image::ImageBuffer::new(img_x, img_y);
-    let black_clr = Color {red: 10, green: 10, blue: 10, alpha: 100};
     let mut curr_clr = &plot; 
 
     for x in 0..img_x {
@@ -48,7 +62,7 @@ pub fn create_plot(img_x: u32, img_y: u32) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
             if x > 150 && x < 155 {
                 curr_clr = &black_clr;
             }
-            else if y > 600 && y < 605 {
+            else if y > *y_clamp && y < *y_clamp + 5 {
                 curr_clr = &black_clr;
             }
             else {curr_clr = &plot;}
@@ -68,9 +82,10 @@ pub fn draw_data_points(vec_x: &Vec<u32>, vec_y: &Vec<u32>) {
 
     if vec_x.len() != vec_y.len() {panic!("Error: Length of Vector X and Y are not the same!");}
 
-    let mut imgbuf = create_plot(find_largest_elem(&vec_x), find_largest_elem(&vec_y));
+    let y_clamp = (find_largest_elem(vec_y) as f32 / 1.5) as u32;
+    let mut imgbuf = create_plot(find_largest_elem(&vec_x), find_largest_elem(&vec_y), &y_clamp);
 
-    let b_clr = Color {red: 30, green: 30, blue: 255, alpha: 50};
+    let b_clr = Color::set_vals(50, 50, 230, 100);
 
     for i in 0..vec_x.len() {
         for j in gen_circ(vec_x[i] as u32, vec_y[i] as u32) {
