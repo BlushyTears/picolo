@@ -5,6 +5,8 @@ Image-reading crate for plotting data and transposing image contents into a data
 
 # Implementations 
 
+# Basic plot
+
 ```rust
 
 // Plotting a 2d Vector
@@ -17,7 +19,7 @@ fn main() {
 }
 ```
 
-# Setting up 
+# Setting up image transpose
 
 ```rust
 
