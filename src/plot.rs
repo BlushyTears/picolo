@@ -4,7 +4,7 @@ use rand::Rng;
 
 const IMAGE_X: u32 = 800;
 const IMAGE_Y: u32 = 800;
-const CIRCLE_RADIUS: u32 = 5;
+const CIRCLE_RADIUS: u32 = 13;
 
 /// Rgba struct
 #[derive(Debug)]
@@ -40,11 +40,12 @@ impl Default for Plot {
 
 // vec_x: Vec<i32>, vec_y: Vec<i32>
 pub fn create_plot(vec_x: &Vec<i32>, vec_y: &Vec<i32>) {
-    
+    if vec_x.len() != vec_y.len() {panic!("Error: Length of Vector X and Y are not the same!");}
+
     let plot = Plot::default();
     let mut imgbuf = image::ImageBuffer::new(plot.imgx, plot.imgy);
     let black_clr = Color {red: 10, green: 10, blue: 10, alpha: 100};
-    let b_clr = Color {red: 10, green: 10, blue: 255, alpha: 100};
+    let b_clr = Color {red: 10, green: 10, blue: 255, alpha: 50};
     let mut curr_clr = &plot.bg_color; 
 
     // Canvas
@@ -70,45 +71,33 @@ pub fn create_plot(vec_x: &Vec<i32>, vec_y: &Vec<i32>) {
         }
     }
 
-    // if vec_x.len() != vec_y {panic!("Error: Length of Vector X and Y are not the same!");}
-
-    // for i in vec_x {
-    //     gen_circ
-    // }
-
-
-    // println!("{}", gen_circ(5, 5));
+    // 2D Datapoints
+    for i in 0..vec_x.len() {
+        for j in gen_circ(vec_x[i] as u32, vec_y[i] as u32) {
+            let pixel = imgbuf.get_pixel_mut(j.x, j.y);
+            *pixel = image::Rgb([b_clr.red, b_clr.green, b_clr.blue]);
+        }
+    }
 
     imgbuf.save("plot.png").unwrap();
 }
 
+fn gen_circ(x_pos: u32, y_pos: u32) -> Vec<Vector2D<u32>>{
+    let x = x_pos + 142;
+    let y = 592 - y_pos;
+    find_map(&x, &y)
+}
 
-// fn gen_circ(x: &u32, y: &u32) -> Option<Color> {
+fn find_map(x_pos: &u32, y_pos: &u32) -> Vec<Vector2D<u32>> {
 
-//     for i in CIRCLE_RADIUS.pow() {
+    let mut map = Vec::new();
 
-//     }
+    for i in *x_pos..CIRCLE_RADIUS + *x_pos {
+        for j in *y_pos..CIRCLE_RADIUS + *y_pos {
+            let element: Vector2D<u32> = Vector2D { x: i, y: j};
+            map.push(element);        
+        }
+    }
 
-//     if x.pow(2) + y.pow(2) >= CIRCLE_RADIUS.pow(2) {
-//         Some(b_clr)
-//     }
-//     else {
-//         None()
-//     }
-
-// }
-
-
-// fn get_square_ins(_plot: &Plot, _x: &u32, _y: &u32) -> Color {
-    
-//     let blue_clr = Color {red: 10, green: 10, blue: 255, alpha: 100};
-    
-//     let mut rng = rand::thread_rng();
-
-//     let r = rng.gen_range(1..50);
-//     let g = rng.gen_range(1..5);
-//     let b = rng.gen_range(1..5);
-
-//     let ret = Color{red: r, green: g, blue: b, alpha: 100};
-//     ret
-// } 
+    map
+}
