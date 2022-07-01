@@ -10,7 +10,7 @@
 //! use picolo::readimg::load_picture;
 //! // Function takes in image path and precision variable:
 //! // 1 = count all pixels, 2 = count half and so on:
-//! let pixl_struct = load_picture("images/ig-icon.png", 2);
+//! let pixl_struct = load_picture("images/ig-icon.png", 1);
 //!
 //! for i in pixl_struct {
 //!     println!("{:?}", i); 
@@ -69,6 +69,8 @@ pub fn get_height(img: &str) -> u32{
 /// }
 /// ```
 
+/// Public function that loads a picture
+/// @params: img as &str, precision as <u32>
 pub fn load_picture(img: &str, precision: u32) -> std::vec::Vec<[Pixel; 1]> {
 
     let mut vec_struct = Vec::new();
