@@ -63,6 +63,7 @@ fn create_plot(img_x: u32, img_y: u32, y_clamp: &u32) -> ImageBuffer<Rgb<u8>, Ve
     let mut imgbuf = image::ImageBuffer::new(img_x, img_y);
     let mut curr_clr = &plot; 
 
+    // Canvas
     for x in 0..img_x {
         for y in 0..img_y {
             let pixel = imgbuf.get_pixel_mut(x, y);
