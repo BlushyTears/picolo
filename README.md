@@ -48,7 +48,7 @@ for i in pixl_struct {
 ```
 
 #TODO:
-*Convert to uf32 functionality (Floats are just easier to work with)
+* Convert to uf32 functionality (Floats are just easier to work with)
 * Add option to draw circles if preferred (.json file preferably)
 * Add coloring variation if dataset become too large for the plot
 * Add line drawing
