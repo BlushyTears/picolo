@@ -17,3 +17,12 @@ for i in pixl_struct {
     i[0].color.red, i[0].color.green, i[0].color.blue);
 }
 ```
+
+#TODO:
+* Implement shrinking if dataset is too big (Idea: check the biggest number in a list, check if bigger than bounds, and divide by the difference of list surpassing the bounds eg: if bounds = 1000 and an element in list is 1100 then divide by 10%)
+*Convert to uf32 functionality (Floats are just easier to work with)
+* Add option to draw circles if preferred
+* Add coloring variation if dataset become too large for the plot
+* Add line drawing
+* Add function to open image after the plot has been drawn so the user doesn't have to
+* Refactor current way of finding origin with exact positions

@@ -59,7 +59,7 @@ pub fn get_height(img: &str) -> u32{
 /// from a map called images next to src:
 /// ```
 /// use picolo::readimg::load_picture;
-/// let foo = "images/ig-icon.png"; 
+/// let foo = "images/icon.png"; 
 /// let bar_str = &foo;
 /// let pixl_struct = load_picture(bar_str, 2);
 ///
