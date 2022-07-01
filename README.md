@@ -1,5 +1,7 @@
 # Picolo
-Image-reading crate for plotting data and transposing image contents into a data structure with the precision decided by the user.
+A very simple Image-reading crate for plotting data and transposing image contents into a detailed data structure with the precision decided by the user.
+
+Precision explanation: Say you only wanted to count every 10 pixels to increase performance, and your AI model doesn't care about individual pixels. Changing the pixel from 1 to 10 will do that, and allow you to compute more data for your buck.
 
 ![plot](images/plot.png)
 
