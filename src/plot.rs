@@ -4,6 +4,7 @@ use rand::Rng;
 
 const IMAGE_X: u32 = 800;
 const IMAGE_Y: u32 = 800;
+const CIRCLE_RADIUS: u32 = 5;
 
 /// Rgba struct
 #[derive(Debug)]
@@ -12,14 +13,6 @@ pub struct Color {
     pub blue: u8,
     pub green: u8,
     pub alpha: u8,
-}
-
-/// Pixel struct that also derives Color struct
-#[derive(Debug)]
-pub struct Pixel {
-    pub x: u32,
-    pub y: u32,
-    pub color: Color,
 }
 
 #[derive(Debug)]
@@ -46,11 +39,12 @@ impl Default for Plot {
 }
 
 // vec_x: Vec<i32>, vec_y: Vec<i32>
-pub fn create_plot() {
+pub fn create_plot(vec_x: &Vec<i32>, vec_y: &Vec<i32>) {
     
     let plot = Plot::default();
     let mut imgbuf = image::ImageBuffer::new(plot.imgx, plot.imgy);
     let black_clr = Color {red: 10, green: 10, blue: 10, alpha: 100};
+    let b_clr = Color {red: 10, green: 10, blue: 255, alpha: 100};
     let mut curr_clr = &plot.bg_color; 
 
     // Canvas
@@ -76,20 +70,45 @@ pub fn create_plot() {
         }
     }
 
+    // if vec_x.len() != vec_y {panic!("Error: Length of Vector X and Y are not the same!");}
+
+    // for i in vec_x {
+    //     gen_circ
+    // }
+
+
+    // println!("{}", gen_circ(5, 5));
+
     imgbuf.save("plot.png").unwrap();
 }
 
 
-fn get_square_ins(_plot: &Plot, _x: &u32, _y: &u32) -> Color {
-    
-    let blue_clr = Color {red: 10, green: 10, blue: 255, alpha: 100};
-    
-    let mut rng = rand::thread_rng();
+// fn gen_circ(x: &u32, y: &u32) -> Option<Color> {
 
-    let r = rng.gen_range(1..50);
-    let g = rng.gen_range(1..5);
-    let b = rng.gen_range(1..5);
+//     for i in CIRCLE_RADIUS.pow() {
 
-    let ret = Color{red: r, green: g, blue: b, alpha: 100};
-    ret
-} 
+//     }
+
+//     if x.pow(2) + y.pow(2) >= CIRCLE_RADIUS.pow(2) {
+//         Some(b_clr)
+//     }
+//     else {
+//         None()
+//     }
+
+// }
+
+
+// fn get_square_ins(_plot: &Plot, _x: &u32, _y: &u32) -> Color {
+    
+//     let blue_clr = Color {red: 10, green: 10, blue: 255, alpha: 100};
+    
+//     let mut rng = rand::thread_rng();
+
+//     let r = rng.gen_range(1..50);
+//     let g = rng.gen_range(1..5);
+//     let b = rng.gen_range(1..5);
+
+//     let ret = Color{red: r, green: g, blue: b, alpha: 100};
+//     ret
+// } 
