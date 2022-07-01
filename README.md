@@ -3,8 +3,6 @@ Image-reading crate for plotting data and transposing image contents into a data
 
 ![plot](images/plot.png)
 
-# Implementations 
-
 # Basic plot
 
 ```rust
