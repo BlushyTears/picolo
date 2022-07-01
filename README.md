@@ -1,6 +1,8 @@
 # Picolo
 Image-reading crate for plotting data and transposing image contents into a data structure with the precision decided by the user.
 
+![alt text](images/plot.jpg?raw=true)
+
 # Implementations 
 
 ```rust
