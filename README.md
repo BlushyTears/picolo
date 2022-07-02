@@ -1,7 +1,11 @@
 # Picolo
-Image-reading crate for plotting data and transposing image contents into a data structure with the precision decided by the user.
+A very simple Image-reading crate for plotting data and transposing image contents into a detailed data structure with the precision decided by the user.
 
-# Implementations 
+Precision explanation: Say you only wanted to count every 10 pixels to increase performance, and your AI model doesn't care about individual pixels. Changing the pixel from 1 to 10 will do that, and allow you to compute more data for your buck.
+
+![plot](images/plot.png)
+
+# Basic plot
 
 ```rust
 
@@ -15,7 +19,7 @@ fn main() {
 }
 ```
 
-# Setting up 
+# Setting up image transpose
 
 ```rust
 
@@ -27,7 +31,9 @@ for i in pixl_struct {
 }
 
 // Accessing all fields:
-// @Params: &path as &str, precision as u32 (1 = 100% precision, 2 = 50% ...)  
+// @Params: &path as &str, precision as u32 (1 = 100% precision, 2 = 50%, ...)  
+use picolo::readimg::load_picture;
+
 let foo = "images/icon.png"; 
 let bar_str = &foo;
 let precision = 1;
@@ -42,10 +48,9 @@ for i in pixl_struct {
 ```
 
 #TODO:
-* Implement shrinking if dataset is too big (Idea: check the biggest number in a list, check if bigger than bounds, and divide by the difference of list surpassing the bounds eg: if bounds = 1000 and an element in list is 1100 then divide by 10%)
-*Convert to uf32 functionality (Floats are just easier to work with)
-* Add option to draw circles if preferred
+* Add option to draw circles if preferred (.json file preferably)
 * Add coloring variation if dataset become too large for the plot
+* Add text above individual datapoints (Display: as '50, 12')
 * Add line drawing
 * Add function to open image after the plot has been drawn so the user doesn't have to
-* Refactor current way of finding origin with exact positions
+* Refactor current way of finding origin with more exact positions
