@@ -13,8 +13,8 @@ Precision explanation: Say you only wanted to count every 10 pixels to increase 
 // @Params: x: &u32, y: &u32
 use picolo::plot::plot_tbl;
 fn main() {
-    let x = vec![0, 152, 1000];
-    let y = vec![0, 152, 490];
+    let x = vec![0, 152, 142, 500, 50, 169];
+    let y = vec![0, 152, 100, 600, 50, 152];
     plot(&x, &y);
 }
 ```
