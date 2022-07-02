@@ -1,9 +1,9 @@
 # Picolo
-A very simple Image-reading crate for plotting data and transposing image contents into a detailed data structure with the precision decided by the user.
+A very simple Image-reading crate for plotting data and transposing image contents into a detailed data structure with the precision decided by the user. Very, very alpha-stage right now.
 
 Precision explanation: Say you only wanted to count every 10 pixels to increase performance, and your AI model doesn't care about individual pixels. Changing the pixel from 1 to 10 will do that, and allow you to compute more data for your buck.
 
-![plot](images/plot.png)
+Plot: https://imgur.com/a/drPB8e0
 
 # Basic plot
 
@@ -54,3 +54,4 @@ for i in pixl_struct {
 * Add line drawing
 * Add function to open image after the plot has been drawn so the user doesn't have to
 * Refactor current way of finding origin with more exact positions
+* Fix allignment issues
