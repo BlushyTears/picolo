@@ -32,7 +32,7 @@ trait ColorSet {
     fn set_vals(r: u8, g: u8, b: u8) -> Color;
 }
 
-// Implement setting of custom color
+/// Implement setting of custom color
 impl ColorSet for Color {
     fn set_vals(r: u8, g: u8, b: u8) -> Color {
         Color { 
@@ -63,6 +63,7 @@ fn create_plot(img_x: u32, img_y: u32, y_clamp: &u32) -> ImageBuffer<Rgb<u8>, Ve
     let mut imgbuf = image::ImageBuffer::new(img_x, img_y);
     let mut curr_clr = &plot; 
 
+    // Canvas
     for x in 0..img_x {
         for y in 0..img_y {
             let pixel = imgbuf.get_pixel_mut(x, y);
@@ -94,7 +95,7 @@ fn find_largest_elem(vec: &Vec<u32>) -> u32 {
 }
 
 /// Plotting function that takes in two vectors of type <u32> and draws the plot saved in /images 
-pub fn plot(vec_x: &Vec<u32>, vec_y: &Vec<u32>) {
+pub fn plot_tbl(vec_x: &Vec<u32>, vec_y: &Vec<u32>) {
 
     if vec_x.len() != vec_y.len() {panic!("Error: Length of Vector X and Y are not the same!");}
 
@@ -109,7 +110,7 @@ pub fn plot(vec_x: &Vec<u32>, vec_y: &Vec<u32>) {
             *pixel = image::Rgb([b_clr.red, b_clr.green, b_clr.blue]);
         }
     }
-    imgbuf.save("images/plot.png").unwrap();
+    imgbuf.save("plot.png").unwrap();
 }
 
 // Helper function for plot() fn
@@ -131,4 +132,3 @@ fn gen_map(x_pos: &u32, y_pos: &u32) -> Vec<Vector2D<u32>> {
     }
     map
 }
-

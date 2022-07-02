@@ -3,7 +3,7 @@
 //! Plotting a 2d Vector
 //! @Params: x: &u32, y: &u32
 //! ```
-//! use picolo::plot::plot;
+//! use picolo::plot::plot_tbl;
 //! fn main() {
 //!    let x = vec![0, 152, 1000];
 //!    let y = vec![0, 152, 490];
