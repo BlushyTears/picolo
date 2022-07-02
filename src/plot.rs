@@ -6,10 +6,10 @@
 //! In this section we have plotting functionality:
 //! ```
 //!     // The simplest way to plot your data onto a canvas
-//!     use picolo::plot::plot;
+//!     use picolo::plot::plot_tbl;
 //!     let x = vec![0, 152, 1000];
 //!     let y = vec![0, 152, 490];
-//!     draw_data_points(&x, &y);
+//!     plot_tbl(&x, &y);
 //!     // Output found in /images/plot.png
 //! ```
 
@@ -116,7 +116,7 @@ pub fn plot_tbl(vec_x: &Vec<u32>, vec_y: &Vec<u32>) {
 // Helper function for plot() fn
 fn get_sq_pos(x_pos: u32, y_pos: u32, y_clamp: &u32) -> Vec<Vector2D<u32>>{
     let x = x_pos + 142;
-    let y = y_clamp - y_pos;
+    let y = y_clamp - (y_pos as f32 / 1.5) as u32;
     gen_map(&x, &y)
 }
 
