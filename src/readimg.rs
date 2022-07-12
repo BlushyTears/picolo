@@ -37,13 +37,13 @@ pub struct Pixel {
 }
 
 /// Returns the width of image as u32
-pub fn get_width(img: &str) -> u32{
+pub fn get_width(img: &str) -> u32 {
     let img = image::open(img).unwrap();
     img.width()
 }
 
 /// Returns height of the image as u32
-pub fn get_height(img: &str) -> u32{
+pub fn get_height(img: &str) -> u32 {
     let img = image::open(img).unwrap();
     img.width()
 }
@@ -61,7 +61,7 @@ pub fn get_height(img: &str) -> u32{
 /// use picolo::readimg::load_picture;
 /// let foo = "images/icon.png"; 
 /// let bar_str = &foo;
-/// let pixl_struct = load_picture(bar_str, 2);
+/// let pixl_struct = load_picture(bar_str, 100);
 ///
 /// for i in pixl_struct {
 ///     println!("x {} y {} red {} green {} blue: {}", i[0].x, i[0].y, 
@@ -76,14 +76,14 @@ pub fn load_picture(img: &str, precision: u32) -> std::vec::Vec<[Pixel; 1]> {
     let mut vec_struct = Vec::new();
     let img = image::open(img).unwrap();
 
-    if precision == 0 || precision > img.height() || precision > img.width() {
-        panic!("Precision cannot be value {} because it's either 0
-        or larger than size of the image height {} or image width {}",
-        precision, img.height(), img.width() ); 
+    if precision < 0 || precision > 100 {
+        panic!("Precision cannot be value {} because it's either under 0%
+        or above 100%",
+        precision); 
     };
 
-    for i in 0..(img.height() / precision) {
-        for j in 0..(img.width() / precision) {
+    for i in 0..(img.height() * precision / 100) {
+        for j in 0..(img.width() * precision / 100) {
             let img_pixel = img.get_pixel(j, i);
             let pxl = [
                 Pixel {

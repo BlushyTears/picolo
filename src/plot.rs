@@ -88,7 +88,8 @@ fn create_plot(img_x: u32, img_y: u32, y_clamp: &u32) -> ImageBuffer<Rgb<u8>, Ve
     imgbuf
 }
 
-// Helper function for finding largest element in a given vector
+// Helper function for finding largest element in a given vector 
+// Also gives a base value of 300 in case dimensions are too small
 fn find_largest_elem(vec: &Vec<u32>) -> u32 {
     let min_value = *vec.iter().max().unwrap();
     min_value + 300

@@ -23,4 +23,10 @@ mod tests {
         plot_tbl(&x, &y);
     }
 
+    #[test]
+    fn read_img() {
+        load_picture("images/icon.png", 100);
+        load_picture("plot.png", 100);
+    }
+
 }
