@@ -36,7 +36,7 @@ use picolo::readimg::load_picture;
 
 let foo = "images/icon.png"; 
 let bar_str = &foo;
-let precision = 1;
+let precision = 100;
 let pixl_struct = picolo::load_picture(bar_str, precision);
 
 // Print all the contents derived from image
