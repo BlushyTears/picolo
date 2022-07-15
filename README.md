@@ -1,8 +1,6 @@
 # Picolo
 A very simple Image-reading crate for plotting data and transposing image contents into a detailed data structure with the precision decided by the user. Very, very alpha-stage right now.
 
-Precision explanation: Say you only wanted to count every 10 pixels to increase performance, and your AI model doesn't care about individual pixels. Changing the pixel from 1 to 10 will do that, and allow you to compute more data for your buck.
-
 Plot: https://imgur.com/a/drPB8e0
 
 # Basic plot
@@ -18,6 +16,8 @@ fn main() {
     plot(&x, &y);
 }
 ```
+
+Precision explanation: 100 = 100%, 50 = 50% of the pixels counted.
 
 # Setting up image transpose
 
