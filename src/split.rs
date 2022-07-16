@@ -14,12 +14,12 @@ pub fn split_img(src: &str, size_x: &u32, size_y: &u32) {
 
     if get_height(src) as f32 % *size_x as f32 != 0.0 || 
     get_width(src) as f32 % *size_y as f32 != 0.0 {
-        panic!("Dimensions of {} Divided by x: {} or y: {} causes decimal
+    panic!("Dimensions of {} Divided by x: {} or y: {} causes decimal
         arithmetic. Please make sure contents of image is a perfect 
         square and its denominators do not generate a fraction",
         src, size_x, size_y);
     } 
-
+    
     let img = load_picture(src, 100);
     let x_iter = get_height(src) / size_x;
     let y_iter = get_width(src) / size_y;

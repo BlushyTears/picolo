@@ -71,7 +71,7 @@ pub fn get_height(img: &str) -> u32 {
 
 /// Public function that loads a picture
 /// @params: img as &str, precision as <u32>
-pub fn load_picture(img: &str, precision: u32) -> std::vec::Vec<[Pixel; 1]> {
+pub fn load_picture(img: &str, precision: u32) -> Vec<[Pixel; 1]> {
 
     let mut vec_struct = Vec::new();
     let img = image::open(img).unwrap();

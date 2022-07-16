@@ -6,11 +6,11 @@ mod readimg;
 
 // Example usage
 fn main() {
-    // let x = vec![0, 152, 142, 500, 50, 800];
-    // let y = vec![0, 152, 100, 600, 50, 800];
-    // plot_tbl(&x, &y);
+    let x = vec![1, 1512, 30, 500, 50, 1619];
+    let y = vec![20, 1212, 1512, 12541, 5215, 602];
+    plot_tbl(&x, &y);
 
     // load_picture("plot.png", 100);
-    split_img("plot.png", &100, &100);
+    // split_img("plot.png", &100, &100);
 }
 

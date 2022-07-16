@@ -1,8 +1,6 @@
 use picolo::readimg::*;
 use picolo::plot::plot_tbl;
 
-// Tests to be added later
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -18,8 +16,15 @@ mod tests {
 
     #[test]
     fn normal_plot() {
-        let x = vec![0, 152, 142, 500, 50, 169];
-        let y = vec![0, 152, 100, 600, 50, 602];
+        let x = vec![0, 152, 0, 500, 50, 169];
+        let y = vec![0, 152, 100, 0, 50, 602];
+        plot_tbl(&x, &y);
+    }
+
+    #[test]
+    fn large_scale_plot() {
+        let x = vec![0, 1512352, 0, 500, 50, 1612529];
+        let y = vec![0, 12152, 1512521, 1254120, 521550, 602];
         plot_tbl(&x, &y);
     }
 
