@@ -13,18 +13,18 @@ use picolo::plot::plot_tbl;
 fn main() {
     let x = vec![0, 152, 142, 500, 50, 169];
     let y = vec![0, 152, 100, 600, 50, 152];
-    plot(&x, &y);
+    plot_tbl(&x, &y);
 }
 ```
 
-Precision explanation: 100 = 100%, 50 = 50% of the pixels counted.
+Precision explanation: 100 = 100%, 50 = 50% of the pixels iterated over.
 
 # Setting up image transpose
 
 ```rust
 
 // Easiest way to print half the contents
-let pixl_struct = load_picture("images/icon.png", 2);
+let pixl_struct = load_picture("images/icon.png", 10);
 
 for i in pixl_struct {
      println!("{:?}", i); 
