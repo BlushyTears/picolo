@@ -4,10 +4,13 @@ use picolo::split::split_img;
 mod tests;
 mod readimg;
 
+
+// main.rs is primarily used for testing purposes- it has nothing to do with the crate itself for the end-user
+
 // Example usage
 fn main() {
-    let x = vec![1, 1512, 30, 500, 50, 1619];
-    let y = vec![20, 1212, 1512, 12541, 5215, 602];
+    let x = vec![0, -152, 10];
+    let y = vec![0, -117, 192];
     plot_tbl(&x, &y);
 
     // load_picture("plot.png", 100);

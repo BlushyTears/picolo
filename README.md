@@ -1,7 +1,7 @@
 # Picolo
-A very simple Image-reading crate for plotting data and transposing image contents into a detailed data structure with the precision decided by the user. Very, very alpha-stage right now.
+A very simple Image-reading crate for plotting data (Inspired by Google's simple approach to plotting) and transposing an image into a broken down data structure with the precision decided by the user. All is Very, very alpha-stage right now.
 
-Plot: https://imgur.com/a/drPB8e0
+Plot Example: https://imgur.com/a/drPB8e0
 
 # Basic plot
 
@@ -17,21 +17,19 @@ fn main() {
 }
 ```
 
-Precision explanation: 100 = 100%, 50 = 50% of the pixels iterated over.
-
-# Setting up image transpose
+# Setting up image table
 
 ```rust
 
 // Easiest way to print half the contents
-let pixl_struct = load_picture("images/icon.png", 10);
+let pixl_struct = load_picture("images/icon.png", 50);
 
 for i in pixl_struct {
      println!("{:?}", i); 
 }
 
 // Accessing all fields:
-// @Params: &path as &str, precision as u32 (1 = 100% precision, 2 = 50%, ...)  
+// @Params: &path as &str, precision as u32 (1 = 100% = pixels counted, 2 = 50%, ...)  
 use picolo::readimg::load_picture;
 
 let foo = "images/icon.png"; 

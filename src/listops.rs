@@ -28,3 +28,15 @@ pub fn round(x: f32, decimals: u32) -> f32 {
 }
 
 
+pub fn has_negative_elem(_vec_x: &Vec<i32>) -> bool {
+    let mut has_neg = false;
+    for i in _vec_x {
+        if i < &0 {has_neg = true};
+    }
+    has_neg
+}
+
+pub fn switch_sign(num: &i32) -> i32 {
+    let new_num = num * -1;
+    new_num
+}
