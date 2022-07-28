@@ -1,3 +1,5 @@
+/// Listops is designed for reading and writing from vectors and its elements
+
 // Helper function for finding largest element in a given vector. Also gives a base value of 300
 pub fn find_largest_elem(vec: &Vec<i32>) -> i32 {
     let mut min_value = *vec.iter().max().unwrap();
@@ -8,6 +10,14 @@ pub fn find_largest_elem(vec: &Vec<i32>) -> i32 {
 pub fn find_smallest_elem(vec: &Vec<i32>) -> i32 {
     let mut min_value = *vec.iter().min().unwrap();
     min_value
+}
+
+pub fn find_largest_abs_elem(vec: Vec<i32>) -> i32 {
+    let abs_max = vec
+        .iter()
+        .max_by(|x, y| x.abs().partial_cmp(&y.abs()).unwrap())
+        .unwrap();
+    *abs_max + 300
 }
 
 pub fn median_vec(array: &Vec<i32>)->f64{
@@ -32,6 +42,14 @@ pub fn has_negative_elem(_vec_x: &Vec<i32>) -> bool {
     let mut has_neg = false;
     for i in _vec_x {
         if i < &0 {has_neg = true};
+    }
+    has_neg
+}
+
+pub fn has_positive_elem(_vec_x: &Vec<i32>) -> bool {
+    let mut has_neg = false;
+    for i in _vec_x {
+        if i > &0 {has_neg = true};
     }
     has_neg
 }

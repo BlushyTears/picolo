@@ -21,6 +21,13 @@ use crate::listops::*;
 /// Radius of each square (Future plan to have these in an JSON file)
 const SQUARE_RADIUS: i32 = 13;
 
+// s_bound = starting bound (left for x and up for y)
+// e_bound = ending bound (right for x and down for y) 
+#[derive(Debug)]
+struct Pair {
+    smallest: i32,
+    largest: i32,
+}
 /// Rgba struct
 #[derive(Debug)]
 struct Color {
@@ -36,23 +43,36 @@ struct OffsetValues {
 }
 
 trait GetOffsetValues {
-    fn get_offset(x: i32, y: i32, has_neg: bool) -> OffsetValues;
+    fn get_offset(pair_x: Pair, pair_y: Pair) -> OffsetValues;
 }
 
-impl GetOffsetValues for OffsetValues {
-    fn get_offset(x: i32, y: i32, has_neg: bool) -> OffsetValues {
-        let mut temp_x = 0;
-        let mut temp_y = 0;
+// Different outcomes
+// 40, 100, 120, 500
+// -40, 100, -120, 500
+// -40, -100, -120, -500
 
-        if !has_neg {
-            temp_x = (x / 4);
-            temp_y = (y as f32 / 1.5) as i32;    
+impl GetOffsetValues for OffsetValues {
+    fn get_offset(pair_x: Pair, pair_y: Pair) -> OffsetValues {
+        let mut origin_x_temp = 0;
+        let mut temp_y = pair_y.largest / 2;
+        let origin_x_abs = (pair_x.largest + pair_x.smallest).abs();
+
+        println!("smallest is: {}", pair_x.smallest);
+
+        if pair_x.smallest.is_negative() {
+            if pair_x.largest.is_positive() {
+                origin_x_temp = origin_x_abs / 2;
+            }
+            else if pair_x.largest.is_negative() {
+                origin_x_temp = (origin_x_abs as f32 / 1.5) as i32; 
+            }
         }
-        else {
-            temp_x = (x / 2);
-            temp_y = (y / 2);     
+        else if pair_x.smallest.is_positive() {
+            origin_x_temp = origin_x_abs / 4;
+
         }
-        OffsetValues { origin_x: (temp_x), origin_y: (temp_y) }
+
+        OffsetValues { origin_x: (origin_x_temp), origin_y: (temp_y) }
     }
 }
 
@@ -89,7 +109,8 @@ fn create_canvas(img_x: i32, img_y: i32, ofv: &OffsetValues) -> ImageBuffer<Rgb<
 
     let plot = Color::default();
     let black_clr = Color::set_vals(10, 10, 10);
-    let mut imgbuf = image::ImageBuffer::new(img_x as u32, img_y as u32);
+    let mut imgbuf = image::ImageBuffer::new((img_x + 1) as u32, img_y as u32);
+    println!("img width: {} img height: {}", imgbuf.width(), imgbuf.height());
     let mut curr_clr = &plot; 
 
     // Canvas
@@ -99,6 +120,8 @@ fn create_canvas(img_x: i32, img_y: i32, ofv: &OffsetValues) -> ImageBuffer<Rgb<
             *pixel = image::Rgb([plot.red, plot.green, plot.blue]);
         }
     }
+
+    println!("ORIGIN_X: {} img_x: {}", ofv.origin_x, img_x);
 
     // Lines
     for x in 0..img_x {
@@ -138,33 +161,41 @@ fn shrink_vec(vec: &Vec<i32>) -> Vec<i32> {
     float_vec
 }
 
-// Controller function to compress vectors using logs if above 700 or below -200
+// Controller function to compress vectors using log
 fn vec_controller(vec: &Vec<i32>) -> Vec<i32> {
     let mut new_vec = Vec::new();
 
-    match find_largest_elem(&vec) {
+    match find_largest_abs_elem(vec.clone()) {
         i if i >= 1000 => new_vec = shrink_vec(&vec),
-        i if i <= -400 => new_vec = shrink_vec(&vec),
-        i if i < 1000 => new_vec = vec.to_owned(),
+        i if i <= -1000 => new_vec = shrink_vec(&vec),
+        i if i < 1000 && i > 0  => new_vec = vec.to_owned(),
+        i if i > -1000 && i < 0 => new_vec = vec.to_owned(),
         _ => println!("Invalid element input"),
     }
     new_vec
 }
 
+// 40 140 180 160
+// -40 140 -180 160
+// 40 -140 160 -180
+
 /// Plotting function that takes in two vectors of type <u32> and draws the plot saved in /images 
 pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
     let vec_x = vec_controller(_vec_x);
     let vec_y = vec_controller(_vec_y);
-    let mut has_neg = false;
 
-    if vec_x.len() != vec_x.len() {panic!("Error: Vector X and Y does not have the same number of elements!");}
+    if vec_x.len() != vec_y.len() {panic!("Error: Vector X and Y does not have the same number of elements!");}
 
+    let bounds_x = Pair{smallest: find_smallest_elem(&vec_x), largest: find_largest_elem(&vec_x)};
+    let bounds_y = Pair{smallest: find_smallest_elem(&vec_y), largest: find_largest_elem(&vec_y)};
+    let off_vals = OffsetValues::get_offset(bounds_x, bounds_y);
 
-    if has_negative_elem(&_vec_x) || has_negative_elem(&vec_y) {has_neg = true;}
-    let off_vals = OffsetValues::get_offset(find_largest_elem(&vec_x), find_largest_elem(&vec_y), has_neg);
+    println!("largest x elem: {} largest y elem: {}", find_largest_abs_elem(vec_x.clone()), find_largest_abs_elem(vec_y.clone()));
 
-    let mut imgbuf = create_canvas(find_largest_elem(&vec_x), find_largest_elem(&vec_y), &off_vals);
-    let b_clr = Color::set_vals(50, 50, 230);
+    // let mut imgbuf = create_canvas(find_largest_elem(&vec_x), find_largest_elem(&vec_y), &off_vals);
+    let mut imgbuf = create_canvas(find_largest_abs_elem(vec_x.clone()), find_largest_abs_elem(vec_y.clone()), &off_vals);
+
+    let b_clr = Color::set_vals(50, 50, 230); 
 
     for i in 0..vec_x.len() {
         for j in get_elem_pos(&vec_x[i], &vec_y[i], &off_vals.origin_x, &off_vals.origin_y) {
@@ -174,6 +205,8 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
     }
     imgbuf.save("images/plot.png").unwrap();
 }
+
+
 
 // Helper function for setting hard-coded values so
 // that origin on graph doesn't start in the upper left corner

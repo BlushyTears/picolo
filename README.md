@@ -1,5 +1,5 @@
 # Picolo
-A very simple Image-reading crate for plotting data (Inspired by Google's simple approach to plotting) and transposing an image into a broken down data structure with the precision decided by the user. All is Very, very alpha-stage right now.
+A very simple Image-reading crate for plotting data (Inspired by Google's simple approach to plotting) and an image reading crate that breaks down data with the precision decided by the user. All is Very, very alpha-stage right now.
 
 Plot Example: https://imgur.com/a/drPB8e0
 
