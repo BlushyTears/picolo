@@ -22,7 +22,7 @@ fn main() {
 ```rust
 
 // Easiest way to print half the contents
-let pixl_struct = load_picture("images/icon.png", 50);
+let pixl_struct = load_picture("icon.png", 50);
 
 for i in pixl_struct {
      println!("{:?}", i); 
@@ -32,7 +32,7 @@ for i in pixl_struct {
 // @Params: &path as &str, precision as u32 (100 = 100% = pixels counted, 50 = 50%, ...)  
 use picolo::readimg::load_picture;
 
-let foo = "images/icon.png"; 
+let foo = "icon.png"; 
 let bar_str = &foo;
 let precision = 100;
 let pixl_struct = picolo::load_picture(bar_str, precision);

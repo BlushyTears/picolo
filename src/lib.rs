@@ -13,7 +13,7 @@
 //! Easiest way to print half the contents
 //! 
 //! ```
-//! let pixl_struct = load_picture("images/icon.png", 2);
+//! let pixl_struct = load_picture("icon.png", 2);
 //! 
 //! for i in pixl_struct {
 //!      println!("{:?}", i); 
@@ -22,7 +22,7 @@
 //! Accessing all fields:
 //! @Params: path as &str, precision as u32 (1 = 100% precision, 2 = 50% ...)  
 //! ```
-//! let foo = "images/icon.png"; 
+//! let foo = "icon.png"; 
 //! let bar_str = &foo;
 //! let precision = 1;
 //! let pixl_struct = picolo::load_picture(bar_str, precision);

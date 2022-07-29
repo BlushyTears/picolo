@@ -1,6 +1,5 @@
 use picolo::plot::plot_tbl;
 use picolo::readimg::*;
-use picolo::split::split_img;
 mod tests;
 mod readimg;
 
