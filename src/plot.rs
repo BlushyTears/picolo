@@ -124,7 +124,6 @@ fn create_canvas(bounds_x: &Pair, bounds_y: &Pair, ofv: &OffsetValues) -> ImageB
 
 
     let mut imgbuf = image::ImageBuffer::new(total_width as u32, total_height as u32);
-    println!("img width: {} img height: {}", imgbuf.width(), imgbuf.height());
     let mut curr_clr = &plot; 
 
     // Canvas
@@ -134,8 +133,6 @@ fn create_canvas(bounds_x: &Pair, bounds_y: &Pair, ofv: &OffsetValues) -> ImageB
             *pixel = image::Rgb([plot.red, plot.green, plot.blue]);
         }
     }
-
-    println!("ORIGIN_X: {} bounds: {}", ofv.origin_x, bounds_x.largest);
 
     // Lines
     for x in 0..total_width {
@@ -151,7 +148,6 @@ fn create_canvas(bounds_x: &Pair, bounds_y: &Pair, ofv: &OffsetValues) -> ImageB
             *pixel = image::Rgb([curr_clr.red, curr_clr.green, curr_clr.blue]);
         }
     }
-
     imgbuf
 }
 
@@ -170,7 +166,6 @@ fn shrink_vec(vec: &Vec<i32>) -> Vec<i32> {
             float_vec.push(round(((*i + temp) as f32).log(1.05), 0) as i32);
         }
     }
-
     float_vec
 }
 
@@ -200,8 +195,6 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
     let bounds_x = Pair{smallest: find_smallest_elem(&vec_x), largest: find_largest_elem(&vec_x)};
     let bounds_y = Pair{smallest: find_smallest_elem(&vec_y), largest: find_largest_elem(&vec_y)};
     let off_vals = OffsetValues::get_offset(&bounds_x, &bounds_y);
-
-    println!("largest x elem: {} largest y elem: {}", find_largest_abs_elem(vec_x.clone()), find_largest_abs_elem(vec_y.clone()));
 
     // let mut imgbuf = create_canvas(find_largest_elem(&vec_x), find_largest_elem(&vec_y), &off_vals);
     let mut imgbuf = create_canvas(&bounds_x, &bounds_y, &off_vals);
