@@ -1,4 +1,4 @@
-//! Picolo is a plotting libary aimed to help carve, read and write data with pixels
+//! Plot.rs brings plotting functionality aimed to help carve, read and write data with pixels
 //! 
 //! Picolo works with the design p&hilosophy of composability, meaning you can execute using multiple components 
 //! to form a layered plot, with a better data representation. (Warning: This is still in the works!)
@@ -127,8 +127,6 @@ fn create_canvas(bounds_x: &Pair, bounds_y: &Pair, ofv: &OffsetValues) -> ImageB
     println!("img width: {} img height: {}", imgbuf.width(), imgbuf.height());
     let mut curr_clr = &plot; 
 
-
-
     // Canvas
     for x in 0..total_width {
         for y in 0..total_height {
@@ -210,15 +208,12 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
 
     let b_clr = Color::set_vals(50, 50, 230); 
 
-
-
     for i in 0..vec_x.len() {
         for j in get_elem_pos(&vec_x[i], &vec_y[i], &off_vals.origin_x, &off_vals.origin_y) {
             let pixel = imgbuf.get_pixel_mut(j.x as u32, j.y as u32);
             *pixel = image::Rgb([b_clr.red, b_clr.green, b_clr.blue]);
         }
     }
-
     imgbuf.save("images/plot.png").unwrap();
 }
 
@@ -231,6 +226,7 @@ fn get_elem_pos(x_pos: &i32, y_pos: &i32, x_clamp: &i32, y_clamp: &i32) -> Vec<V
 }
 
 // Helper function generating a map for square representing individual elements
+// Subtract by 4 for x and y to account for element offset on plot
 fn gen_map(x_pos: &i32, y_pos: &i32) -> Vec<Vector2D<i32>> {
     let mut map = Vec::new();
 

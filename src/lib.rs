@@ -1,16 +1,15 @@
 //! Implementations
 //!  
 //! Plotting a 2d Vector
-//! @Params: x: &u32, y: &u32
+//! @Params: x: &u32, y: &u32 (Make sure Vector X and Vector Y have the same number of elements)
 //! ```
 //! use picolo::plot::plot_tbl;
 //! fn main() {
-//!     let x = vec![1, 1512, 30, 500, 50, 1619];
-//!     let y = vec![20, 1212, 1512, 12541, 5215, 602];
+//!     let x = vec![1, -1512, 30, 500, 50, 1619];
+//!     let y = vec![20, -1212, -1512, 12541, 5215, 602];
 //!     plot_tbl(&x, &y);
 //! }
 //! ```
-//!
 //! Easiest way to print half the contents
 //! 
 //! ```

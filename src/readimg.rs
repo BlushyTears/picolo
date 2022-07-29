@@ -9,8 +9,8 @@
 //! ```
 //! use picolo::readimg::load_picture;
 //! // Function takes in image path and precision variable:
-//! // 1 = count all pixels, 2 = count half and so on:
-//! let pixl_struct = load_picture("images/icon.png", 1);
+//! // 100 = 100% of all pixels, 50 = 50% ...:
+//! let pixl_struct = load_picture("images/icon.png", 50);
 //!
 //! for i in pixl_struct {
 //!     println!("{:?}", i); 

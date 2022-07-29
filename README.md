@@ -1,5 +1,5 @@
 # Picolo
-A very simple Image-reading crate for plotting data with dynamically placed origin based on dataset. (Inspired by Google's simple approach to plotting) and an image reading crate that breaks down data with the precision decided by the user. All is Very, very alpha-stage right now.
+A simple, yet comprehensive Image-reading crate for plotting data with dynamically placed origin based on dataset. (Inspired by Google's simple approach to plotting) and an image reading crate that breaks down data with the precision decided by the user. All is Very, very alpha-stage right now.
 
 Plot Example: https://imgur.com/a/i72KTgB
 
@@ -29,7 +29,7 @@ for i in pixl_struct {
 }
 
 // Accessing all fields:
-// @Params: &path as &str, precision as u32 (1 = 100% = pixels counted, 2 = 50%, ...)  
+// @Params: &path as &str, precision as u32 (100 = 100% = pixels counted, 50 = 50%, ...)  
 use picolo::readimg::load_picture;
 
 let foo = "images/icon.png"; 
