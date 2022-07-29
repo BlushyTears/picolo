@@ -10,8 +10,6 @@ use crate::readimg::*;
 pub fn split_img(src: &str, size_x: &u32, size_y: &u32) {
     // let mut vec_struct = Vec::new();
 
-    // get_width("plot.png");
-
     if get_height(src) as f32 % *size_x as f32 != 0.0 || 
     get_width(src) as f32 % *size_y as f32 != 0.0 {
     panic!("Dimensions of {} Divided by x: {} or y: {} causes decimal

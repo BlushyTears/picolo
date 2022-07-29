@@ -10,7 +10,7 @@
 //! use picolo::readimg::load_picture;
 //! // Function takes in image path and precision variable:
 //! // 100 = 100% of all pixels, 50 = 50% ...:
-//! let pixl_struct = load_picture("images/icon.png", 50);
+//! let pixl_struct = load_picture("icon.png", 50);
 //!
 //! for i in pixl_struct {
 //!     println!("{:?}", i); 
@@ -59,7 +59,7 @@ pub fn get_height(img: &str) -> u32 {
 /// from a map called images next to src:
 /// ```
 /// use picolo::readimg::load_picture;
-/// let foo = "images/icon.png"; 
+/// let foo = "icon.png"; 
 /// let bar_str = &foo;
 /// let pixl_struct = load_picture(bar_str, 100);
 ///

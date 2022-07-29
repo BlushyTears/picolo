@@ -214,7 +214,7 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
             *pixel = image::Rgb([b_clr.red, b_clr.green, b_clr.blue]);
         }
     }
-    imgbuf.save("images/plot.png").unwrap();
+    imgbuf.save("plot.png").unwrap();
 }
 
 // Helper function for setting hard-coded values so
