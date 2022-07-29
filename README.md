@@ -1,18 +1,18 @@
 # Picolo
-A very simple Image-reading crate for plotting data (Inspired by Google's simple approach to plotting) and an image reading crate that breaks down data with the precision decided by the user. All is Very, very alpha-stage right now.
+A very simple Image-reading crate for plotting data with dynamically placed origin based on dataset. (Inspired by Google's simple approach to plotting) and an image reading crate that breaks down data with the precision decided by the user. All is Very, very alpha-stage right now.
 
-Plot Example: https://imgur.com/a/drPB8e0
+Plot Example: https://imgur.com/a/i72KTgB
 
 # Basic plot
 
 ```rust
 
-// Plotting a 2d Vector
+// Plotting a 2d Vector with log scale in mind
 // @Params: x: &u32, y: &u32
 use picolo::plot::plot_tbl;
 fn main() {
-    let x = vec![0, 152, 142, 500, 50, 169];
-    let y = vec![0, 152, 100, 600, 50, 152];
+    let x = vec![-0, -151, -0, -500, 50, -8612529];
+    let y = vec![0, 12152, 12521, 254120, 521550, 602];
     plot_tbl(&x, &y);
 }
 ```

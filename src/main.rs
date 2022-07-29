@@ -10,7 +10,7 @@ mod readimg;
 // Example usage
 fn main() {
     let x = vec![-0, -151, -0, -500, 50, -8612529];
-    let y = vec![-0, -151, -0, -500, 50, -8612529];
+    let y = vec![0, 12152, 12521, 254120, 521550, 602];
     plot_tbl(&x, &y);
 
     // load_picture("plot.png", 100);
