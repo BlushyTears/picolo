@@ -43,36 +43,46 @@ struct OffsetValues {
 }
 
 trait GetOffsetValues {
-    fn get_offset(pair_x: Pair, pair_y: Pair) -> OffsetValues;
+    fn get_offset(pair_x: &Pair, pair_y: &Pair) -> OffsetValues;
 }
 
 // Different outcomes
 // 40, 100, 120, 500
-// -40, 100, -120, 500
+// -40, 100, -120, -500
 // -40, -100, -120, -500
 
 impl GetOffsetValues for OffsetValues {
-    fn get_offset(pair_x: Pair, pair_y: Pair) -> OffsetValues {
+    fn get_offset(pair_x: &Pair, pair_y: &Pair) -> OffsetValues {
         let mut origin_x_temp = 0;
-        let mut temp_y = pair_y.largest / 2;
-        let origin_x_abs = (pair_x.largest + pair_x.smallest).abs();
-
-        println!("smallest is: {}", pair_x.smallest);
+        let mut origin_y_temp = pair_y.largest / 2;
+        let origin_x_abs = pair_x.largest.abs() + pair_x.smallest.abs();
+        let origin_y_abs = pair_y.largest.abs() + pair_y.smallest.abs();
 
         if pair_x.smallest.is_negative() {
             if pair_x.largest.is_positive() {
                 origin_x_temp = origin_x_abs / 2;
             }
             else if pair_x.largest.is_negative() {
-                origin_x_temp = (origin_x_abs as f32 / 1.5) as i32; 
+                origin_x_temp = (origin_x_abs as f32 * 1.8) as i32; 
             }
         }
         else if pair_x.smallest.is_positive() {
             origin_x_temp = origin_x_abs / 4;
-
         }
 
-        OffsetValues { origin_x: (origin_x_temp), origin_y: (temp_y) }
+        if pair_y.smallest.is_negative() {
+            if pair_y.largest.is_positive() {
+                origin_y_temp = origin_y_abs / 2;
+            }
+            else if pair_y.largest.is_negative() {
+                origin_y_temp = (origin_y_abs as f32 * 1.8) as i32; 
+            }
+        }
+        else if pair_y.smallest.is_positive() {
+            origin_y_temp = (origin_y_abs as f32 / 1.5) as i32;
+        }
+
+        OffsetValues { origin_x: (origin_x_temp), origin_y: (origin_y_temp) }
     }
 }
 
@@ -105,27 +115,33 @@ impl Default for Color {
 
 // Creates a basic canvas. 
 // Returns: Image buffer for other functions to operate on
-fn create_canvas(img_x: i32, img_y: i32, ofv: &OffsetValues) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
+fn create_canvas(bounds_x: &Pair, bounds_y: &Pair, ofv: &OffsetValues) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
 
     let plot = Color::default();
     let black_clr = Color::set_vals(10, 10, 10);
-    let mut imgbuf = image::ImageBuffer::new((img_x + 1) as u32, img_y as u32);
+    let total_width = bounds_x.largest.abs() + bounds_x.smallest.abs();
+    let total_height = bounds_y.largest.abs() + bounds_y.smallest.abs();
+
+
+    let mut imgbuf = image::ImageBuffer::new(total_width as u32, total_height as u32);
     println!("img width: {} img height: {}", imgbuf.width(), imgbuf.height());
     let mut curr_clr = &plot; 
 
+
+
     // Canvas
-    for x in 0..img_x {
-        for y in 0..img_y {
+    for x in 0..total_width {
+        for y in 0..total_height {
             let pixel = imgbuf.get_pixel_mut(x.try_into().unwrap(), y.try_into().unwrap());
             *pixel = image::Rgb([plot.red, plot.green, plot.blue]);
         }
     }
 
-    println!("ORIGIN_X: {} img_x: {}", ofv.origin_x, img_x);
+    println!("ORIGIN_X: {} bounds: {}", ofv.origin_x, bounds_x.largest);
 
     // Lines
-    for x in 0..img_x {
-        for y in 0..img_y {
+    for x in 0..total_width {
+        for y in 0..total_height {
             if x > ofv.origin_x && x < ofv.origin_x + 5 {
                 curr_clr = &black_clr;
             }
@@ -137,6 +153,7 @@ fn create_canvas(img_x: i32, img_y: i32, ofv: &OffsetValues) -> ImageBuffer<Rgb<
             *pixel = image::Rgb([curr_clr.red, curr_clr.green, curr_clr.blue]);
         }
     }
+
     imgbuf
 }
 
@@ -156,8 +173,6 @@ fn shrink_vec(vec: &Vec<i32>) -> Vec<i32> {
         }
     }
 
-    println!("{:?}", float_vec);
-
     float_vec
 }
 
@@ -172,12 +187,10 @@ fn vec_controller(vec: &Vec<i32>) -> Vec<i32> {
         i if i > -1000 && i < 0 => new_vec = vec.to_owned(),
         _ => println!("Invalid element input"),
     }
+    // Add 1 to each element because a potential 0 will mess up drawing of lines (Hacky solution)
+    new_vec = new_vec.into_iter().map(|x| x + 1).collect();
     new_vec
 }
-
-// 40 140 180 160
-// -40 140 -180 160
-// 40 -140 160 -180
 
 /// Plotting function that takes in two vectors of type <u32> and draws the plot saved in /images 
 pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
@@ -188,14 +201,16 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
 
     let bounds_x = Pair{smallest: find_smallest_elem(&vec_x), largest: find_largest_elem(&vec_x)};
     let bounds_y = Pair{smallest: find_smallest_elem(&vec_y), largest: find_largest_elem(&vec_y)};
-    let off_vals = OffsetValues::get_offset(bounds_x, bounds_y);
+    let off_vals = OffsetValues::get_offset(&bounds_x, &bounds_y);
 
     println!("largest x elem: {} largest y elem: {}", find_largest_abs_elem(vec_x.clone()), find_largest_abs_elem(vec_y.clone()));
 
     // let mut imgbuf = create_canvas(find_largest_elem(&vec_x), find_largest_elem(&vec_y), &off_vals);
-    let mut imgbuf = create_canvas(find_largest_abs_elem(vec_x.clone()), find_largest_abs_elem(vec_y.clone()), &off_vals);
+    let mut imgbuf = create_canvas(&bounds_x, &bounds_y, &off_vals);
 
     let b_clr = Color::set_vals(50, 50, 230); 
+
+
 
     for i in 0..vec_x.len() {
         for j in get_elem_pos(&vec_x[i], &vec_y[i], &off_vals.origin_x, &off_vals.origin_y) {
@@ -203,10 +218,9 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
             *pixel = image::Rgb([b_clr.red, b_clr.green, b_clr.blue]);
         }
     }
+
     imgbuf.save("images/plot.png").unwrap();
 }
-
-
 
 // Helper function for setting hard-coded values so
 // that origin on graph doesn't start in the upper left corner
@@ -222,7 +236,7 @@ fn gen_map(x_pos: &i32, y_pos: &i32) -> Vec<Vector2D<i32>> {
 
     for i in *x_pos..SQUARE_RADIUS + *x_pos {
         for j in *y_pos..SQUARE_RADIUS + *y_pos {
-            let element: Vector2D<i32> = Vector2D { x: i, y: j};
+            let element: Vector2D<i32> = Vector2D { x: i - 4, y: j - 4};
             map.push(element);        
         }
     }

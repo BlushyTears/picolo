@@ -1,5 +1,6 @@
 use picolo::readimg::*;
 use picolo::plot::plot_tbl;
+use picolo::listops::*;
 
 #[cfg(test)]
 mod tests {
@@ -25,8 +26,8 @@ mod tests {
     // Test if log scale works
     #[test]
     fn large_scale_plot() {
-        let x = vec![0, 1512352, 0, 500, 50, 1612529];
-        let y = vec![0, 12152, 1512521, 1254120, 521550, 602];
+        let x = vec![0, 151235, 0, 500, 50, 12529];
+        let y = vec![0, 12152, 12521, 254120, 521550, 602];
         plot_tbl(&x, &y);
     }
 
@@ -35,6 +36,16 @@ mod tests {
         let x = vec![0, -1512352, -0, -500, 50, -1612529];
         let y = vec![0, -12152, -1512521, -1254120, -521550, -602];
         plot_tbl(&x, &y);
+    }
+
+    #[test]
+    fn get_largest_elem() {
+        let x = vec![0, 1512352, 0, 500, 50, 1612529]; // All pos
+        let y = vec![0, -12152, -1512521, -12541, -521550, -602]; // All neg
+        let z = vec![0, -2529, 0, -500, 50, 712529]; // Mixed
+        assert_eq!(find_largest_abs_elem(x), 1612529 +300);
+        assert_eq!(find_largest_abs_elem(y), -1512521 +300);
+        assert_eq!(find_largest_abs_elem(z), 712529 +300);
     }
 
     #[test]

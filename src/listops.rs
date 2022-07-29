@@ -12,6 +12,7 @@ pub fn find_smallest_elem(vec: &Vec<i32>) -> i32 {
     min_value
 }
 
+// Turns all elements into posititive First, then finds largest element, returns as negative if that was the initial element
 pub fn find_largest_abs_elem(vec: Vec<i32>) -> i32 {
     let abs_max = vec
         .iter()
@@ -36,7 +37,6 @@ pub fn round(x: f32, decimals: u32) -> f32 {
     let y = 10i32.pow(decimals) as f32;
     (x * y).round() / y
 }
-
 
 pub fn has_negative_elem(_vec_x: &Vec<i32>) -> bool {
     let mut has_neg = false;
