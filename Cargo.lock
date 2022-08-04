@@ -384,7 +384,7 @@ dependencies = [
 
 [[package]]
 name = "picolo"
-version = "0.3.6"
+version = "0.3.7"
 dependencies = [
  "image",
  "vector2d",

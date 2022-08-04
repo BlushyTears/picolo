@@ -15,7 +15,7 @@ fn main() {
 
     let x = vec![0, 500, 200, 300];
     let y = vec![0, 100, 200, 300];
-    plot_tbl(&x, &y, &a_setting);
+    plot_tbl(&x, &y, &a_setting, "plot.png");
 }
 ```
 
