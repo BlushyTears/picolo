@@ -58,14 +58,14 @@ impl Default for PlotSettings {
     }
 }
 
-impl SetColor for PlotSettings {
-    fn set_color(r: u8, g: u8, b: u8, src: String) -> PlotSettings {
+impl Custom for PlotSettings {
+    fn custom_plot(r: u8, g: u8, b: u8, src: String) -> PlotSettings {
         PlotSettings {plot_color: Color::set_vals(r, g, b), source: src}
     }
 }
 
-pub trait SetColor {
-    fn set_color(r: u8, g: u8, b: u8, src: String) -> PlotSettings;
+pub trait Custom {
+    fn custom_plot(r: u8, g: u8, b: u8, src: String) -> PlotSettings;
 }
 
 /// Offsetted values from the edge of the image in order to help find origin

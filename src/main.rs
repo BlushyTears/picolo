@@ -1,4 +1,4 @@
-use picolo::plot::{plot_tbl, PlotSettings, SetColor};
+use picolo::plot::{plot_tbl, PlotSettings, Custom};
 use picolo::readimg::*;
 mod tests;
 mod readimg;
@@ -20,7 +20,7 @@ fn main() {
     plot_tbl(&x, &y, &b_setting);
 
     // Color has to be 0-255
-    let c_setting = PlotSettings::set_color(255, 0, 0, String::from("plot3.png"));
+    let c_setting = PlotSettings::custom_plot(255, 0, 0, String::from("plot3.png"));
 
     let x = vec![0, 100, 200, 300];
     let y = vec![0, 100, 200, 300];
