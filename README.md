@@ -9,11 +9,13 @@ Plot Example: https://imgur.com/a/i72KTgB
 
 // Plotting a 2d Vector with log scale in mind
 // @Params: x: &u32, y: &u32
-use picolo::plot::plot_tbl;
+use picolo::plot::*;
 fn main() {
-    let x = vec![-0, -151, -0, -500, 50, -8612529];
-    let y = vec![0, 12152, 12521, 254120, 521550, 602];
-    plot_tbl(&x, &y);
+    let a_setting = PlotSettings::default();
+
+    let x = vec![0, 500, 200, 300];
+    let y = vec![0, 100, 200, 300];
+    plot_tbl(&x, &y, &a_setting);
 }
 ```
 
