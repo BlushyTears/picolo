@@ -1,16 +1,33 @@
-//! Plot.rs brings plotting functionality aimed to help carve, read and write data with pixels
+//! Plot.rs brings plotting functionality aimed to help visualize data
 //! 
-//! Picolo works with the design p&hilosophy of composability, meaning you can execute using multiple components 
+//! Picolo works with the design philosophy of composability, meaning you can execute using multiple components 
 //! to form a layered plot, with a better data representation. (Warning: This is still in the works!)
 //! 
 //! In this section we have plotting functionality:
 //! ```
-//!     // The simplest way to plot your data onto a canvas
-//!     use picolo::plot::plot_tbl;
-//!     let x = vec![0, 152, 1000];
-//!     let y = vec![0, 152, 490];
-//!     plot_tbl(&x, &y);
-//!     // Output found in /images/plot.png
+//!    // The simplest way to plot your data onto a canvas
+//!    let a_setting = PlotSettings::default();
+//!
+//!    let x = vec![0, 500, 200, 300];
+//!    let y = vec![0, 100, 200, 300];
+//!    plot_tbl(&x, &y, &a_setting);
+//!
+//!    // Changing a particular setting (source) whilst keeping the default color
+//!    let mut b_setting = PlotSettings::default();
+//!    b_setting.source = String::from("plot2.png");
+//!
+//!    let x = vec![0, 500, 200, 300];
+//!    let y = vec![0, 100, 200, 300];
+//!    plot_tbl(&x, &y, &b_setting);
+//!
+//!    // Fully customized setting:
+//!    // Color range has to be 0-255
+//!    let c_setting = PlotSettings::set_color(255, 0, 0, String::from("plog.png"));
+//!
+//!    let x = vec![0, 100, 200, 300];
+//!    let y = vec![0, 100, 200, 300];
+//!    plot_tbl(&x, &y, &c_setting);
+//!  
 //! ```
 
 use image::{ImageBuffer, Rgb};
@@ -24,18 +41,34 @@ const SQUARE_RADIUS: i32 = 13;
 // s_bound = starting bound (left for x and up for y)
 // e_bound = ending bound (right for x and down for y) 
 #[derive(Debug)]
-struct Pair {
+struct Bounds {
     smallest: i32,
     largest: i32,
 }
-/// Rgba struct
-#[derive(Debug)]
-struct Color {
-    pub red: u8,
-    pub blue: u8,
-    pub green: u8,
+
+#[derive(Debug, Clone)]
+pub struct PlotSettings {
+    pub plot_color: Color,
+    pub source: String,
 }
 
+impl Default for PlotSettings {
+    fn default() -> PlotSettings {
+        PlotSettings {plot_color: Color::set_vals(50, 50, 230), source: String::from("plot.png")}
+    }
+}
+
+impl SetColor for PlotSettings {
+    fn set_color(r: u8, g: u8, b: u8, src: String) -> PlotSettings {
+        PlotSettings {plot_color: Color::set_vals(r, g, b), source: src}
+    }
+}
+
+pub trait SetColor {
+    fn set_color(r: u8, g: u8, b: u8, src: String) -> PlotSettings;
+}
+
+/// Offsetted values from the edge of the image in order to help find origin
 #[derive(Debug)]
 struct OffsetValues {
     origin_x: i32,
@@ -43,16 +76,11 @@ struct OffsetValues {
 }
 
 trait GetOffsetValues {
-    fn get_offset(pair_x: &Pair, pair_y: &Pair) -> OffsetValues;
+    fn get_offset(pair_x: &Bounds, pair_y: &Bounds) -> OffsetValues;
 }
 
-// Different outcomes
-// 40, 100, 120, 500
-// -40, 100, -120, -500
-// -40, -100, -120, -500
-
 impl GetOffsetValues for OffsetValues {
-    fn get_offset(pair_x: &Pair, pair_y: &Pair) -> OffsetValues {
+    fn get_offset(pair_x: &Bounds, pair_y: &Bounds) -> OffsetValues {
         let mut origin_x_temp = 0;
         let mut origin_y_temp = pair_y.largest / 2;
         let origin_x_abs = pair_x.largest.abs() + pair_x.smallest.abs();
@@ -86,6 +114,14 @@ impl GetOffsetValues for OffsetValues {
     }
 }
 
+/// Rgb struct
+#[derive(Debug, Clone)]
+pub struct Color {
+    pub red: u8,
+    pub blue: u8,
+    pub green: u8,
+}
+
 /// Trait for setting custom color
 trait ColorSet {
     fn set_vals(r: u8, g: u8, b: u8) -> Color;
@@ -115,7 +151,7 @@ impl Default for Color {
 
 // Creates a basic canvas. 
 // Returns: Image buffer for other functions to operate on
-fn create_canvas(bounds_x: &Pair, bounds_y: &Pair, ofv: &OffsetValues) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
+fn create_canvas(bounds_x: &Bounds, bounds_y: &Bounds, ofv: &OffsetValues) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
 
     let plot = Color::default();
     let black_clr = Color::set_vals(10, 10, 10);
@@ -151,7 +187,7 @@ fn create_canvas(bounds_x: &Pair, bounds_y: &Pair, ofv: &OffsetValues) -> ImageB
     imgbuf
 }
 
-// Compresses vector to fit all its datapoints on a graph
+/// Compresses vector to fit all its datapoints on a graph
 fn shrink_vec(vec: &Vec<i32>) -> Vec<i32> {
     let mut float_vec = Vec::new();
     let mut temp = 0;
@@ -169,7 +205,7 @@ fn shrink_vec(vec: &Vec<i32>) -> Vec<i32> {
     float_vec
 }
 
-// Controller function to compress vectors using log
+/// Controller function to compress vectors using log
 fn vec_controller(vec: &Vec<i32>) -> Vec<i32> {
     let mut new_vec = Vec::new();
 
@@ -186,41 +222,39 @@ fn vec_controller(vec: &Vec<i32>) -> Vec<i32> {
 }
 
 /// Plotting function that takes in two vectors of type <u32> and draws the plot saved in /images 
-pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>) {
+pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>, settings: &PlotSettings) {
     let vec_x = vec_controller(_vec_x);
     let vec_y = vec_controller(_vec_y);
 
     if vec_x.len() != vec_y.len() {panic!("Error: Vector X and Y does not have the same number of elements!");}
 
-    let bounds_x = Pair{smallest: find_smallest_elem(&vec_x), largest: find_largest_elem(&vec_x)};
-    let bounds_y = Pair{smallest: find_smallest_elem(&vec_y), largest: find_largest_elem(&vec_y)};
+    let bounds_x = Bounds{smallest: find_smallest_elem(&vec_x), largest: find_largest_elem(&vec_x)};
+    let bounds_y = Bounds{smallest: find_smallest_elem(&vec_y), largest: find_largest_elem(&vec_y)};
     let off_vals = OffsetValues::get_offset(&bounds_x, &bounds_y);
 
     // let mut imgbuf = create_canvas(find_largest_elem(&vec_x), find_largest_elem(&vec_y), &off_vals);
     let mut imgbuf = create_canvas(&bounds_x, &bounds_y, &off_vals);
 
-    let b_clr = Color::set_vals(50, 50, 230); 
-
     for i in 0..vec_x.len() {
         for j in get_elem_pos(&vec_x[i], &vec_y[i], &off_vals.origin_x, &off_vals.origin_y) {
             let pixel = imgbuf.get_pixel_mut(j.x as u32, j.y as u32);
-            *pixel = image::Rgb([b_clr.red, b_clr.green, b_clr.blue]);
+            *pixel = image::Rgb([settings.plot_color.red, settings.plot_color.green, settings.plot_color.blue]);
         }
     }
-    imgbuf.save("plot.png").unwrap();
+    imgbuf.save(settings.source.clone()).unwrap();
 }
 
-// Helper function for setting hard-coded values so
-// that origin on graph doesn't start in the upper left corner
+/// Helper function for setting hard-coded values so
+/// that origin on graph doesn't start in the upper left corner
 fn get_elem_pos(x_pos: &i32, y_pos: &i32, x_clamp: &i32, y_clamp: &i32) -> Vec<Vector2D<i32>>{
     let x = x_pos + x_clamp;
     let y = y_clamp - (*y_pos as f32 / 1.5) as i32;
-    gen_map(&x, &y)
+    gen_sq_map(&x, &y)
 }
 
-// Helper function generating a map for square representing individual elements
-// Subtract by 4 for x and y to account for element offset on plot
-fn gen_map(x_pos: &i32, y_pos: &i32) -> Vec<Vector2D<i32>> {
+/// Helper function generating a map for square representing individual elements
+/// Subtract by 4 for x and y to account for element offset on plot
+fn gen_sq_map(x_pos: &i32, y_pos: &i32) -> Vec<Vector2D<i32>> {
     let mut map = Vec::new();
 
     for i in *x_pos..SQUARE_RADIUS + *x_pos {

@@ -36,5 +36,4 @@
 //! ```
 pub mod plot;
 pub mod readimg;
-pub mod split;
 pub mod listops;

@@ -21,6 +21,7 @@ pub fn find_largest_abs_elem(vec: Vec<i32>) -> i32 {
     *abs_max + 300
 }
 
+// Find median in a vector
 pub fn median_vec(array: &Vec<i32>)->f64{
     if (array.len() % 2)==0 {
         let ind_left = array.len()/2-1; 
@@ -32,12 +33,13 @@ pub fn median_vec(array: &Vec<i32>)->f64{
     }
 }
 
-// Simple round function
+// Round a number to the requested number of decimal points
 pub fn round(x: f32, decimals: u32) -> f32 {
     let y = 10i32.pow(decimals) as f32;
     (x * y).round() / y
 }
 
+// Check if a vector has a negative element
 pub fn has_negative_elem(_vec_x: &Vec<i32>) -> bool {
     let mut has_neg = false;
     for i in _vec_x {
@@ -46,6 +48,7 @@ pub fn has_negative_elem(_vec_x: &Vec<i32>) -> bool {
     has_neg
 }
 
+// Check if a vector has a positive element
 pub fn has_positive_elem(_vec_x: &Vec<i32>) -> bool {
     let mut has_neg = false;
     for i in _vec_x {
@@ -54,6 +57,7 @@ pub fn has_positive_elem(_vec_x: &Vec<i32>) -> bool {
     has_neg
 }
 
+// The function that's calling this should check if input is positive or negative to keep this code to a minimum
 pub fn switch_sign(num: &i32) -> i32 {
     let new_num = num * -1;
     new_num
