@@ -14,7 +14,7 @@ mod tests {
         let c_setting = PlotSettings::default();
         let x = vec![0, 152];
         let y = vec![0, 152, 100];
-        plot_tbl(&x, &y, &c_setting);
+        plot_tbl(&x, &y, &c_setting, "plot.png");
     }
 
     // Normal plot
@@ -23,7 +23,7 @@ mod tests {
         let c_setting = PlotSettings::default();
         let x = vec![0, 152, 0, 500, 50, 169];
         let y = vec![0, 152, 100, 0, 50, 602];
-        plot_tbl(&x, &y, &c_setting);
+        plot_tbl(&x, &y, &c_setting, "plot.png");
     }
 
     // Test if log scale works
@@ -32,7 +32,7 @@ mod tests {
         let c_setting = PlotSettings::default();
         let x = vec![0, 151235, 0, 500, 50, 12529];
         let y = vec![0, 12152, 12521, 254120, 521550, 602];
-        plot_tbl(&x, &y, &c_setting);
+        plot_tbl(&x, &y, &c_setting, "plot.png");
     }
 
     #[test]
@@ -40,7 +40,7 @@ mod tests {
         let c_setting = PlotSettings::default();
         let x = vec![0, -1512352, -0, -500, 50, -1612529];
         let y = vec![0, -12152, -1512521, -1254120, -521550, -602];
-        plot_tbl(&x, &y, &c_setting);
+        plot_tbl(&x, &y, &c_setting, "plot.png");
     }
 
     #[test]

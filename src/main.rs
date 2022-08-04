@@ -10,21 +10,20 @@ fn main() {
 
     let x = vec![0, 500, 200, 300];
     let y = vec![0, 100, 200, 300];
-    plot_tbl(&x, &y, &a_setting);
+    plot_tbl(&x, &y, &a_setting, "plot.png");
 
     let mut b_setting = PlotSettings::default();
-    b_setting.source = String::from("plot2.png");
 
     let x = vec![0, 500, 200, 300];
     let y = vec![0, 100, 200, 300];
-    plot_tbl(&x, &y, &b_setting);
+    plot_tbl(&x, &y, &b_setting, "plot2.png");
 
     // Color has to be 0-255
-    let c_setting = PlotSettings::custom_plot(255, 0, 0, String::from("plot3.png"));
+    let c_setting = PlotSettings::custom_plot(255, 0, 0);
 
     let x = vec![0, 100, 200, 300];
     let y = vec![0, 100, 200, 300];
-    plot_tbl(&x, &y, &c_setting);
+    plot_tbl(&x, &y, &c_setting, "plot3.png");
 
     // load_picture("plot.png", 100);
     // split_img("plot.png", &100, &100);

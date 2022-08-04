@@ -10,7 +10,7 @@
 //!
 //!    let x = vec![0, 500, 200, 300];
 //!    let y = vec![0, 100, 200, 300];
-//!    plot_tbl(&x, &y, &a_setting);
+//!    plot_tbl(&x, &y, &a_setting, "plot.png");
 //!
 //!    // Changing a particular setting (source) whilst keeping the default color
 //!    let mut b_setting = PlotSettings::default();
@@ -18,15 +18,15 @@
 //!
 //!    let x = vec![0, 500, 200, 300];
 //!    let y = vec![0, 100, 200, 300];
-//!    plot_tbl(&x, &y, &b_setting);
+//!    plot_tbl(&x, &y, &b_setting, "plot2.png");
 //!
 //!    // Fully customized setting:
 //!    // Color range has to be 0-255
-//!    let c_setting = PlotSettings::set_color(255, 0, 0, String::from("plog.png"));
+//!    let c_setting = PlotSettings::custom_plot(255, 0, 0, String::from("plog.png"));
 //!
 //!    let x = vec![0, 100, 200, 300];
 //!    let y = vec![0, 100, 200, 300];
-//!    plot_tbl(&x, &y, &c_setting);
+//!    plot_tbl(&x, &y, &c_setting, "plot3.png");
 //!  
 //! ```
 
@@ -49,23 +49,23 @@ struct Bounds {
 #[derive(Debug, Clone)]
 pub struct PlotSettings {
     pub plot_color: Color,
-    pub source: String,
 }
 
 impl Default for PlotSettings {
     fn default() -> PlotSettings {
-        PlotSettings {plot_color: Color::set_vals(50, 50, 230), source: String::from("plot.png")}
+        PlotSettings {plot_color: Color::set_vals(50, 50, 230)}
     }
 }
 
+// More options to be added later
 impl Custom for PlotSettings {
-    fn custom_plot(r: u8, g: u8, b: u8, src: String) -> PlotSettings {
-        PlotSettings {plot_color: Color::set_vals(r, g, b), source: src}
+    fn custom_plot(r: u8, g: u8, b: u8) -> PlotSettings {
+        PlotSettings {plot_color: Color::set_vals(r, g, b)}
     }
 }
 
 pub trait Custom {
-    fn custom_plot(r: u8, g: u8, b: u8, src: String) -> PlotSettings;
+    fn custom_plot(r: u8, g: u8, b: u8) -> PlotSettings;
 }
 
 /// Offsetted values from the edge of the image in order to help find origin
@@ -222,7 +222,7 @@ fn vec_controller(vec: &Vec<i32>) -> Vec<i32> {
 }
 
 /// Plotting function that takes in two vectors of type <u32> and draws the plot saved in /images 
-pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>, settings: &PlotSettings) {
+pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>, settings: &PlotSettings, source: &str) {
     let vec_x = vec_controller(_vec_x);
     let vec_y = vec_controller(_vec_y);
 
@@ -241,7 +241,7 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>, settings: &PlotSettings) {
             *pixel = image::Rgb([settings.plot_color.red, settings.plot_color.green, settings.plot_color.blue]);
         }
     }
-    imgbuf.save(settings.source.clone()).unwrap();
+    imgbuf.save(source).unwrap();
 }
 
 /// Helper function for setting hard-coded values so

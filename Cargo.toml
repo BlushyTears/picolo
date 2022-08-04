@@ -1,6 +1,6 @@
 [package]
 name = "picolo"
-version = "0.3.5"
+version = "0.3.6"
 authors = ["Adam"]
 homepage = "https://github.com/BlushyTears/picolo"
 repository = "https://github.com/BlushyTears/picolo"
