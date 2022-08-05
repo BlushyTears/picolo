@@ -1,16 +1,14 @@
-use picolo::readimg::*;
-use picolo::plot::*;
 use picolo::listops::*;
+use picolo::plot::*;
+use picolo::readimg::*;
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    
     #[test]
     #[should_panic]
-    fn try_to_plot_uneven()
-    {
+    fn try_to_plot_uneven() {
         let c_setting = PlotSettings::default();
         let x = vec![0, 152];
         let y = vec![0, 152, 100];
@@ -48,9 +46,9 @@ mod tests {
         let x = vec![0, 1512352, 0, 500, 50, 1612529]; // All pos
         let y = vec![0, -12152, -1512521, -12541, -521550, -602]; // All neg
         let z = vec![0, -2529, 0, -500, 50, 712529]; // Mixed
-        assert_eq!(find_largest_abs_elem(x), 1612529 +300);
-        assert_eq!(find_largest_abs_elem(y), -1512521 +300);
-        assert_eq!(find_largest_abs_elem(z), 712529 +300);
+        assert_eq!(find_largest_abs_elem(x), 1612529 + 300);
+        assert_eq!(find_largest_abs_elem(y), -1512521 + 300);
+        assert_eq!(find_largest_abs_elem(z), 712529 + 300);
     }
 
     #[test]
@@ -58,5 +56,4 @@ mod tests {
         load_picture("images/icon.png", 100);
         load_picture("plot.png", 50);
     }
-
 }

@@ -6,7 +6,7 @@ pub fn find_largest_elem(vec: &Vec<i32>) -> i32 {
     min_value + 300
 }
 
-// Helper function for finding the smallest 
+// Helper function for finding the smallest
 pub fn find_smallest_elem(vec: &Vec<i32>) -> i32 {
     let mut min_value = *vec.iter().min().unwrap();
     min_value
@@ -22,14 +22,13 @@ pub fn find_largest_abs_elem(vec: Vec<i32>) -> i32 {
 }
 
 // Find median in a vector
-pub fn median_vec(array: &Vec<i32>)->f64{
-    if (array.len() % 2)==0 {
-        let ind_left = array.len()/2-1; 
-        let ind_right = array.len()/2 ;
-        (array[ind_left]+array[ind_right]) as f64 / 2.0
-
+pub fn median_vec(array: &Vec<i32>) -> f64 {
+    if (array.len() % 2) == 0 {
+        let ind_left = array.len() / 2 - 1;
+        let ind_right = array.len() / 2;
+        (array[ind_left] + array[ind_right]) as f64 / 2.0
     } else {
-        array[(array.len()/2)] as f64
+        array[(array.len() / 2)] as f64
     }
 }
 
@@ -43,7 +42,9 @@ pub fn round(x: f32, decimals: u32) -> f32 {
 pub fn has_negative_elem(_vec_x: &Vec<i32>) -> bool {
     let mut has_neg = false;
     for i in _vec_x {
-        if i < &0 {has_neg = true};
+        if i < &0 {
+            has_neg = true
+        };
     }
     has_neg
 }
@@ -52,7 +53,9 @@ pub fn has_negative_elem(_vec_x: &Vec<i32>) -> bool {
 pub fn has_positive_elem(_vec_x: &Vec<i32>) -> bool {
     let mut has_neg = false;
     for i in _vec_x {
-        if i > &0 {has_neg = true};
+        if i > &0 {
+            has_neg = true
+        };
     }
     has_neg
 }

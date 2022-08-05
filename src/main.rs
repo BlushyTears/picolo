@@ -1,11 +1,10 @@
-use picolo::plot::{plot_tbl, PlotSettings, Custom};
+use picolo::plot::{plot_tbl, Color, Custom, PlotSettings};
 use picolo::readimg::*;
-mod tests;
 mod readimg;
+mod tests;
 
 // Example usage
 fn main() {
-
     let a_setting = PlotSettings::default();
 
     let x = vec![0, 500, 200, 300];
@@ -18,8 +17,15 @@ fn main() {
     let y = vec![0, 100, 200, 300];
     plot_tbl(&x, &y, &b_setting, "plot2.png");
 
-    // Color has to be 0-255
-    let c_setting = PlotSettings::custom_plot(255, 0, 0, "circles".to_string());
+    let c_setting = PlotSettings {
+        plot_color: Color {
+            red: 255,
+            blue: 50,
+            green: 20,
+        },
+        shape_type: "circles".to_string(),
+        line_thickness: 2,
+    };
 
     let x = vec![0, 100, 200, 300];
     let y = vec![0, 100, 200, 300];
@@ -28,7 +34,6 @@ fn main() {
     // load_picture("plot.png", 100);
     // split_img("plot.png", &100, &100);
 }
-
 
 // Internal todo:
 // Make shrink vec function use biggest absolute value as reference instead of a hard coded value

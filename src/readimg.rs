@@ -13,7 +13,7 @@
 //! let pixl_struct = load_picture("icon.png", 50);
 //!
 //! for i in pixl_struct {
-//!     println!("{:?}", i); 
+//!     println!("{:?}", i);
 //! }
 //! ```
 
@@ -54,17 +54,17 @@ pub fn get_height(img: &str) -> u32 {
 ///
 /// # Example
 ///
-/// A more practical example generating a full table 
+/// A more practical example generating a full table
 /// consisting of each and every pixel
 /// from a map called images next to src:
 /// ```
 /// use picolo::readimg::load_picture;
-/// let foo = "icon.png"; 
+/// let foo = "icon.png";
 /// let bar_str = &foo;
 /// let pixl_struct = load_picture(bar_str, 100);
 ///
 /// for i in pixl_struct {
-///     println!("x {} y {} red {} green {} blue: {}", i[0].x, i[0].y, 
+///     println!("x {} y {} red {} green {} blue: {}", i[0].x, i[0].y,
 ///     i[0].color.red, i[0].color.green, i[0].color.blue);
 /// }
 /// ```
@@ -72,33 +72,32 @@ pub fn get_height(img: &str) -> u32 {
 /// Public function that loads a picture
 /// @params: img as &str, precision as <u32>
 pub fn load_picture(img: &str, precision: u32) -> Vec<[Pixel; 1]> {
-
     let mut vec_struct = Vec::new();
     let img = image::open(img).unwrap();
 
     if precision < 0 || precision > 100 {
-        panic!("Precision cannot be value {} because it's either under 0%
+        panic!(
+            "Precision cannot be value {} because it's either under 0%
         or above 100%",
-        precision); 
+            precision
+        );
     };
 
     for i in 0..(img.height() * precision / 100) {
         for j in 0..(img.width() * precision / 100) {
             let img_pixel = img.get_pixel(j, i);
-            let pxl = [
-                Pixel {
-                    x: i,
-                    y: j,
-                    color: Color {
-                                red: img_pixel[0], 
-                                green: img_pixel[1], 
-                                blue: img_pixel[2], 
-                                alpha: img_pixel[3]
-                            },
+            let pxl = [Pixel {
+                x: i,
+                y: j,
+                color: Color {
+                    red: img_pixel[0],
+                    green: img_pixel[1],
+                    blue: img_pixel[2],
+                    alpha: img_pixel[3],
                 },
-            ];
+            }];
             vec_struct.push(pxl);
         }
-    };
+    }
     vec_struct
 }
