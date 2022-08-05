@@ -19,7 +19,7 @@ fn main() {
     plot_tbl(&x, &y, &b_setting, "plot2.png");
 
     // Color has to be 0-255
-    let c_setting = PlotSettings::custom_plot(255, 0, 0);
+    let c_setting = PlotSettings::custom_plot(255, 0, 0, "circles".to_string());
 
     let x = vec![0, 100, 200, 300];
     let y = vec![0, 100, 200, 300];

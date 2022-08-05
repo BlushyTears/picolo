@@ -1,4 +1,4 @@
-//! Plot.rs brings plotting functionality aimed to help visualize data
+//! Plot.rs brings plotting functionality aimed to help visuali&ze data
 //! 
 //! Picolo works with the design philosophy of composability, meaning you can execute using multiple components 
 //! to form a layered plot, with a better data representation. (Warning: This is still in the works!)
@@ -30,13 +30,20 @@
 //!  
 //! ```
 
+use std::string;
+
 use image::{ImageBuffer, Rgb};
 use vector2d::Vector2D;
 
 use crate::listops::*;
 
 /// Radius of each square (Future plan to have these in an JSON file)
-const SQUARE_RADIUS: i32 = 13;
+const SQUARE_RADIUS: i32 = 12;
+
+/// Radius of each square (Future plan to have these in an JSON file)
+const CIRCLE_RADIUS: i32 = 24;
+
+
 
 // s_bound = starting bound (left for x and up for y)
 // e_bound = ending bound (right for x and down for y) 
@@ -46,26 +53,28 @@ struct Bounds {
     largest: i32,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct PlotSettings {
     pub plot_color: Color,
+    pub shape_type: String,
 }
 
 impl Default for PlotSettings {
     fn default() -> PlotSettings {
-        PlotSettings {plot_color: Color::set_vals(50, 50, 230)}
+        let custom_string = String::from("squares");
+        PlotSettings {plot_color: Color::set_vals(50, 50, 230), shape_type: custom_string}
     }
 }
 
 // More options to be added later
 impl Custom for PlotSettings {
-    fn custom_plot(r: u8, g: u8, b: u8) -> PlotSettings {
-        PlotSettings {plot_color: Color::set_vals(r, g, b)}
+    fn custom_plot(r: u8, g: u8, b: u8, shape: String) -> PlotSettings {
+        PlotSettings {plot_color: Color::set_vals(r, g, b), shape_type: shape}
     }
 }
 
 pub trait Custom {
-    fn custom_plot(r: u8, g: u8, b: u8) -> PlotSettings;
+    fn custom_plot(r: u8, g: u8, b: u8, shape: String) -> PlotSettings;
 }
 
 /// Offsetted values from the edge of the image in order to help find origin
@@ -173,10 +182,10 @@ fn create_canvas(bounds_x: &Bounds, bounds_y: &Bounds, ofv: &OffsetValues) -> Im
     // Lines
     for x in 0..total_width {
         for y in 0..total_height {
-            if x > ofv.origin_x && x < ofv.origin_x + 5 {
+            if x > ofv.origin_x && x < ofv.origin_x + 2 {
                 curr_clr = &black_clr;
             }
-            else if y > ofv.origin_y && y < ofv.origin_y + 5 {
+            else if y > ofv.origin_y && y < ofv.origin_y + 2 {
                 curr_clr = &black_clr;
             }
             else {curr_clr = &plot;}
@@ -236,7 +245,7 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>, settings: &PlotSettings, s
     let mut imgbuf = create_canvas(&bounds_x, &bounds_y, &off_vals);
 
     for i in 0..vec_x.len() {
-        for j in get_elem_pos(&vec_x[i], &vec_y[i], &off_vals.origin_x, &off_vals.origin_y) {
+        for j in get_elem_pos(&vec_x[i], &vec_y[i], &off_vals.origin_x, &off_vals.origin_y, settings) {
             let pixel = imgbuf.get_pixel_mut(j.x as u32, j.y as u32);
             *pixel = image::Rgb([settings.plot_color.red, settings.plot_color.green, settings.plot_color.blue]);
         }
@@ -246,10 +255,14 @@ pub fn plot_tbl(_vec_x: &Vec<i32>, _vec_y: &Vec<i32>, settings: &PlotSettings, s
 
 /// Helper function for setting hard-coded values so
 /// that origin on graph doesn't start in the upper left corner
-fn get_elem_pos(x_pos: &i32, y_pos: &i32, x_clamp: &i32, y_clamp: &i32) -> Vec<Vector2D<i32>>{
+fn get_elem_pos(x_pos: &i32, y_pos: &i32, x_clamp: &i32, y_clamp: &i32, settings: &PlotSettings) -> Vec<Vector2D<i32>>{
     let x = x_pos + x_clamp;
     let y = y_clamp - (*y_pos as f32 / 1.5) as i32;
-    gen_sq_map(&x, &y)
+    match settings.shape_type.as_str() {
+        "squares" => return gen_sq_map(&x, &y),
+        "circles" => return gen_cir_map(&x, &y),
+        _ => panic!("incorrect shape request!"),
+    }
 }
 
 /// Helper function generating a map for square representing individual elements
@@ -261,6 +274,35 @@ fn gen_sq_map(x_pos: &i32, y_pos: &i32) -> Vec<Vector2D<i32>> {
         for j in *y_pos..SQUARE_RADIUS + *y_pos {
             let element: Vector2D<i32> = Vector2D { x: i - 4, y: j - 4};
             map.push(element);        
+        }
+    }
+    map
+}
+
+// float r,x=12,y=15,a=4,b=3;
+// r=sqrt(pow((x-a),2)+pow((y-b),2));
+
+// let base: i32 = 2; // an explicit type is required
+// assert_eq!(base.pow(10), 1024);
+// d = √(x−h)^2+(y−k)^2,
+
+/// Helper function generating a map for circle representing individual elements
+/// Subtract by 4 for x and y to account for element offset on plot
+fn gen_cir_map(x_pos: &i32, y_pos: &i32) -> Vec<Vector2D<i32>> {
+    let mut map = Vec::new();
+    let c_p: Vector2D<i32> = Vector2D{x: x_pos + (CIRCLE_RADIUS / 2), y: y_pos + (CIRCLE_RADIUS / 2)}; // h and k
+
+    for i in *x_pos..c_p.x + CIRCLE_RADIUS {
+        for j in *y_pos..c_p.y + CIRCLE_RADIUS{
+            
+            // let con = i.pow(2) + j.pow(2);
+            println!("i: {} j: {} x_pos: {} y_pos {} c_p: {:?}", i.pow(2), j.pow(2), x_pos, y_pos, c_p);
+            println!("diameter: {}", ((x_pos - i).pow(2) as f64 + (y_pos - j).pow(2) as f64).sqrt());
+            if ((c_p.x - i).pow(2) as f64 + (c_p.y - j).pow(2) as f64).sqrt() < (CIRCLE_RADIUS as f64).sqrt() {
+                let element: Vector2D<i32> = Vector2D { x: i, y: j};
+                map.push(element);            
+            } 
+
         }
     }
     map
